@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  events-api:
+    image: events-api
+    container_name: events_api_application
+    command: dotnet ef database update
+    ports:
+      - "5000: 80"
+    networks:
+      - my_network
+    depends_on:
+      - ms-sql-server
+
+networks:
+  my_network:
+    driver: bridge

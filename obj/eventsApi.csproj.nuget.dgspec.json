@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\sammyDoc\\projects\\work_projects\\.net-work\\events\\eventsApi\\eventsApi.csproj": {}
+    "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\eventsApi.csproj": {}
   },
   "projects": {
-    "D:\\sammyDoc\\projects\\work_projects\\.net-work\\events\\eventsApi\\eventsApi.csproj": {
+    "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\eventsApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\sammyDoc\\projects\\work_projects\\.net-work\\events\\eventsApi\\eventsApi.csproj",
+        "projectUniqueName": "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\eventsApi.csproj",
         "projectName": "eventsApi",
-        "projectPath": "D:\\sammyDoc\\projects\\work_projects\\.net-work\\events\\eventsApi\\eventsApi.csproj",
+        "projectPath": "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\eventsApi.csproj",
         "packagesPath": "C:\\Users\\dorci\\.nuget\\packages\\",
-        "outputPath": "D:\\sammyDoc\\projects\\work_projects\\.net-work\\events\\eventsApi\\obj\\",
+        "outputPath": "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dorci\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -41,6 +41,18 @@
           "targetAlias": "net7.0",
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[7.0.4, )"
             },
