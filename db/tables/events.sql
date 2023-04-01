@@ -7,7 +7,6 @@ CREATE TABLE dbo.Employees
     [Description] VARCHAR(100) NULL,
     [Location] VARCHAR(100) NOT NULL,
     Capacity INT NOT NULL,
-
 ) 
 GO
 

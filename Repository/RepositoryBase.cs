@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace eventsApi.Models
+namespace eventsApi.Repository
 {
-    public class Attendee
+    public interface RepositoryBase
     {
-
+        
     }
 }

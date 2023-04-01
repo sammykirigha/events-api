@@ -22,11 +22,12 @@ namespace eventsApi.Models
         [Required(ErrorMessage = "Location is required")]
         public string? Location { get; set; }
 
-        [Required(ErrorMessage = "Description is required")]
         public string? Description { get; set; }
 
         [Required(ErrorMessage = "Capacity is required")]
         public int? Capacity { get; set; }
+
+        public ICollection<Attendee>? Attendees { get; set; }
 
     }
 }
