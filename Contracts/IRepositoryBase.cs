@@ -8,7 +8,7 @@ namespace eventsApi.Contracts
 {
     public interface IRepositoryBase<T>
     {
-        IQueryable<T> FindAllEvents();
+        IQueryable<T> FindAll();
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
 
         void Create(T entity);
