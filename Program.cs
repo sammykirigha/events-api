@@ -1,29 +1,28 @@
 using eventsApi.Contracts;
 using eventsApi.Entities;
-using eventsApi.Extensions;
 using eventsApi.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddDbContext<RepositoryContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sqlServerOptionsAction: sqlOptions =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaulConnection"), sqlServerOptionsAction: sqlOptions =>
 {
     sqlOptions.EnableRetryOnFailure();
 }));
 
-builder.Services.configureCors();
-builder.Services.ConfigureIISIntegration();
-builder.Services.ConfigureSqlServerContext(builder.Configuration);
-builder.Services.ConfigureRepositoryWrapper();
+builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// builder.Services.AddHttpsRedirection(options =>
+// {
+//     options.HttpsPort = 5000;
+// });
 
 var app = builder.Build();
 
@@ -39,5 +38,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("Open");
 
 app.Run();

@@ -29,10 +29,10 @@ namespace eventsApi.Models
         public string? LastName { get; set; }
 
         [Required(ErrorMessage = "Guest is required")]
-        public Boolean? Guest { get; set; }
+        public string? Guest { get; set; }
 
         [Required(ErrorMessage = "Speaker is required")]
-        public Boolean? Speaker { get; set; }
+        public string? Speaker { get; set; }
 
         [ForeignKey(nameof(Event))]
         public Guid EventId { get; set; }

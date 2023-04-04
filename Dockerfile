@@ -3,12 +3,12 @@ WORKDIR /app
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKdIR /src
+WORKDIR /src
 COPY ["eventsApi.csproj", "."]
 RUN dotnet restore "./eventsApi.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "eventsApi.csproj" -c Release -o app/build
+RUN dotnet build "eventsApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "eventsApi.csproj" -c Release -o /app/publish /p:UseAppHost=false

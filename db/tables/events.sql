@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS dbo.Events;
-CREATE TABLE dbo.Employees
+CREATE TABLE dbo.Events
 (
     EventId INT IDENTITY PRIMARY KEY,
     EventName VARCHAR(100) NOT NULL,
