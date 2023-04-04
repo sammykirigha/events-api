@@ -6,17 +6,16 @@ CREATE TABLE dbo.Attendees
     Phone VARCHAR(100) NOT NULL,
     [FirstName] VARCHAR(100) NULL,
     [LastName] VARCHAR(100) NOT NULL,
-    Guest VARCHAR(100) NOT NULL,
     Speaker VARCHAR(100) NOT NULL,
-    Guest VARCHAR(100) NOT NULL,
-    FOREIGN KEY (Event_Id) REFERENCES Events(EventId) ON DELETE CASCADE ON UPDATE CASCADE
+    EventId INT NOT NULL,
+    FOREIGN KEY (EventId) REFERENCES Events(EventId) ON DELETE CASCADE ON UPDATE CASCADE
 ) 
 GO
 
 INSERT INTO dbo.Attendees
-    (EventName, EventDate, [Location], Capacity)
+    (Email, Phone, [FirstName], LastName, Speaker, EventId )
 VALUES
-    (1, 'Wedding', '2023-04-08', 'A Friend wedding', 'Nyeri', 100)
+    ('sammy@gmail.com', '098765768', 'Samuel', 'Kirigha', 'Yes', 1)
 
 
 SELECT *

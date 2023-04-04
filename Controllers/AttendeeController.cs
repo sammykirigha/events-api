@@ -109,10 +109,71 @@ namespace eventsApi.Controllers
 
                 return CreatedAtRoute("AttendeeById", new { id = createdAttendee.AttendeeId }, createdAttendee);
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAttendee(Guid id, [FromBody] AttendeeForUpdateDto attendee)
+        {
+            try
+            {
+                if (attendee == null)
+                {
+                    return BadRequest("Attendee object is null");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+
+                var attendeeEntity = await _repository.Attendee.GetAttendeeByIdAsync(id);
+                if (attendeeEntity == null)
+                {
+                    return NotFound();
+                }
+
+                _mapper.Map(attendee, attendeeEntity);
+                _repository.Attendee.UpdateAttendee(attendeeEntity);
+                await _repository.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAttendee(Guid id)
+        {
+            try
+            {
+                var attendee = await _repository.Attendee.GetAttendeeByIdAsync(id);
+
+                if (attendee == null)
+                {
+                    return NotFound();
+                }
+
+                //implement a delete from a related table logic
+                // if(_repository.Event.)
+
+                _repository.Attendee.DeleteAttendee(attendee);
+                await _repository.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error");
             }
         }
     }

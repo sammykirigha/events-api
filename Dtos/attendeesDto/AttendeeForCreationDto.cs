@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eventsApi.Dtos
 {
-    public class AttendeeForUpdateDto
+    public class AttendeeForCreationDto
     {
         public Guid AttendeeId { get; set; }
 
@@ -26,10 +26,10 @@ namespace eventsApi.Dtos
         [StringLength(60, ErrorMessage = "LastName can't be longer than 60 characters")]
         public string? LastName { get; set; }
 
-        [Required(ErrorMessage = "Guest is required")]
-        public string? Guest { get; set; }
-
         [Required(ErrorMessage = "Speaker is required")]
         public string? Speaker { get; set; }
+
+        [Required(ErrorMessage = "EventName is required")]
+        public string? EventName { get; set; }
     }
 }

@@ -11,9 +11,9 @@ CREATE TABLE dbo.Events
 GO
 
 INSERT INTO dbo.Events
-    (EventName, EventDate, [Location], Capacity)
+    (EventName, EventDate, [Description], [Location], Capacity)
 VALUES
-    (1, 'Wedding', '2023-04-08', 'A Friend wedding', 'Nyeri', 100)
+    ('Wedding', '2023-04-08', 'A Friend wedding', 'Nyeri', 100)
 
 
 SELECT *
