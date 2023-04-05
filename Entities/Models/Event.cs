@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace eventsApi.Models
 {
-    [Table("event")]
+    [Table("Events")]
     public class Event
     {
-        public Guid EventId { get; set; }
+        public int EventId { get; set; }
 
         [Required(ErrorMessage = "EventName is required")]
         [StringLength(60, ErrorMessage = "EventName can't be longer than 60 characters")]

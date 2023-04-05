@@ -12,7 +12,7 @@ using eventsApi.Entities;
 namespace eventsApi.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230403145119_MyFirstMigration")]
+    [Migration("20230405035517_MyFirstMigration")]
     partial class MyFirstMigration
     {
         /// <inheritdoc />
@@ -27,25 +27,23 @@ namespace eventsApi.Migrations
 
             modelBuilder.Entity("eventsApi.Models.Attendee", b =>
                 {
-                    b.Property<Guid>("AttendeeId")
+                    b.Property<int>("AttendeeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendeeId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("Guest")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -65,14 +63,28 @@ namespace eventsApi.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("attendee");
+                    b.ToTable("Attendees");
+
+                    b.HasData(
+                        new
+                        {
+                            AttendeeId = 1,
+                            Email = "sammy@gmail.com",
+                            EventId = 1,
+                            FirstName = "Samuel",
+                            LastName = "Kirigha",
+                            Phone = "098767564",
+                            Speaker = "Yes"
+                        });
                 });
 
             modelBuilder.Entity("eventsApi.Models.Event", b =>
                 {
-                    b.Property<Guid>("EventId")
+                    b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"));
 
                     b.Property<int?>("Capacity")
                         .IsRequired()
@@ -95,7 +107,18 @@ namespace eventsApi.Migrations
 
                     b.HasKey("EventId");
 
-                    b.ToTable("event");
+                    b.ToTable("Events");
+
+                    b.HasData(
+                        new
+                        {
+                            EventId = 1,
+                            Capacity = 100,
+                            Description = "A Friend wedding",
+                            EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011),
+                            EventName = "Wedding",
+                            Location = "Nyeri"
+                        });
                 });
 
             modelBuilder.Entity("eventsApi.Models.Attendee", b =>

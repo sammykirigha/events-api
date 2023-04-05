@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace eventsApi.Models
 {
-    [Table("attendee")]
+    [Table("Attendees")]
     public class Attendee
     {
-        public Guid AttendeeId { get; set; }
+        public int AttendeeId { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Please Provide a valid email")]
@@ -32,7 +32,7 @@ namespace eventsApi.Models
         public string? Speaker { get; set; }
 
         [ForeignKey(nameof(Event))]
-        public Guid EventId { get; set; }
+        public int EventId { get; set; }
         public Event? Event { get; set; }
     }
 }

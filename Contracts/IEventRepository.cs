@@ -8,6 +8,6 @@ namespace eventsApi.Contracts
 {
     public interface IEventRepository : IRepositoryBase<Event>
     {
-
+        Task<IEnumerable<Event>> GetAllEventsAsync();
     }
 }

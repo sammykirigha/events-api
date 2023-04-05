@@ -31,18 +31,18 @@ namespace eventsApi.Controllers
             {
                 var attendees = await _repository.Attendee.GetAllAttendeesAsync();
 
-                //map
-                return Ok(attendees);
+                var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
+                return Ok(attendeeResult);
             }
             catch (Exception ex)
             {
 
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
         [HttpGet("{id}", Name = "AttendeeById")]
-        public async Task<IActionResult> GetAttendeeById(Guid id)
+        public async Task<IActionResult> GetAttendeeById(int id)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace eventsApi.Controllers
         }
 
         [HttpGet("{id}/events")]
-        public async Task<IActionResult> GetAttendeesWithDetails(Guid id)
+        public async Task<IActionResult> GetAttendeesWithDetails(int id)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace eventsApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAttendee(Guid id, [FromBody] AttendeeForUpdateDto attendee)
+        public async Task<IActionResult> UpdateAttendee(int id, [FromBody] AttendeeForUpdateDto attendee)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace eventsApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAttendee(Guid id)
+        public async Task<IActionResult> DeleteAttendee(int id)
         {
             try
             {

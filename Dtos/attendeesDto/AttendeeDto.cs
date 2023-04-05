@@ -8,7 +8,7 @@ namespace eventsApi.Dtos
 {
     public class AttendeeDto
     {
-        public Guid AttendeeId { get; set; }
+        public int AttendeeId { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Please Provide a valid email")]

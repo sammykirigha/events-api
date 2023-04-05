@@ -12,5 +12,10 @@ namespace eventsApi.Repository
     {
         public EventRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
+
+        public Task<IEnumerable<Event>> GetAllEventsAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
