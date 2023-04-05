@@ -14,7 +14,7 @@ namespace eventsApi.Repository
         public AttendeeRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
 
-        public async Task<IEnumerable<Attendee>> GetAllAttendeesAsync()
+        public async Task<IList<Attendee>> GetAllAttendeesAsync()
         {
             var results = await FindAll().OrderBy(att => att.AttendeeId).ToListAsync();
             return results;

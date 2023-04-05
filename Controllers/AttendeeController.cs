@@ -31,8 +31,8 @@ namespace eventsApi.Controllers
             {
                 var attendees = await _repository.Attendee.GetAllAttendeesAsync();
 
-                var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
-                return Ok(attendeeResult);
+                // var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
+                return Ok(attendees);
             }
             catch (Exception ex)
             {
