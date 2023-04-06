@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using eventsApi.Contracts;
 using eventsApi.Entities;
 using eventsApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace eventsApi.Repository
 {
@@ -13,9 +14,10 @@ namespace eventsApi.Repository
         public EventRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
 
-        public Task<IEnumerable<Event>> GetAllEventsAsync()
+        public async Task<IEnumerable<Event>> GetAllEventsAsync()
         {
-            throw new NotImplementedException();
+            var results = await FindAll().OrderBy(ev => ev.EventId).ToListAsync();
+            return results;
         }
     }
 }

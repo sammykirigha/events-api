@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using eventsApi.Contracts;
+using eventsApi.Dtos.eventsDto;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -14,18 +16,36 @@ namespace eventsApi.Controllers
     {
         private IRepositoryWrapper _repository;
 
-        public EventsController(IRepositoryWrapper repository)
+        private readonly IMapper _mapper;
+
+        public EventsController(IRepositoryWrapper repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAllEvents()
         {
-            var events = _repository.Event.FindAll();
 
-            return (IEnumerable<string>)Ok(events);
-            // return new Any[] { "value1", "value2", events };
+            try
+            {
+                var events = await _repository.Event.GetAllEventsAsync();
+                var attendees = await _repository.Attendee.GetAllAttendeesAsync();
+                var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
+
+                var events = (from event in events
+                  join attendee in attendees
+                  on event.EventId equals attendee.EventId
+                  );
+                  
+                return Ok(eventsResults);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

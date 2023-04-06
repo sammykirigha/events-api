@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using eventsApi.Dtos;
+using eventsApi.Dtos.eventsDto;
 using eventsApi.Models;
 
 namespace eventsApi.Handlers
@@ -13,6 +14,8 @@ namespace eventsApi.Handlers
         public AutoMapperAttendee()
         {
             CreateMap<Attendee, AttendeeForCreationDto>().ReverseMap();
+            CreateMap<Attendee, AttendeeDto>().ReverseMap();
+            CreateMap<Event, EventDto>().ReverseMap();
         }
     }
 }
