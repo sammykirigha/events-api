@@ -22,6 +22,21 @@ namespace eventsApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AttendeeEvent", b =>
+                {
+                    b.Property<int>("AttendeesAttendeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventsEventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AttendeesAttendeeId", "EventsEventId");
+
+                    b.HasIndex("EventsEventId");
+
+                    b.ToTable("AttendeeEvent");
+                });
+
             modelBuilder.Entity("eventsApi.Models.Attendee", b =>
                 {
                     b.Property<int>("AttendeeId")
@@ -33,9 +48,6 @@ namespace eventsApi.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -58,8 +70,6 @@ namespace eventsApi.Migrations
 
                     b.HasKey("AttendeeId");
 
-                    b.HasIndex("EventId");
-
                     b.ToTable("Attendees");
 
                     b.HasData(
@@ -67,11 +77,46 @@ namespace eventsApi.Migrations
                         {
                             AttendeeId = 1,
                             Email = "sammy@gmail.com",
-                            EventId = 1,
                             FirstName = "Samuel",
                             LastName = "Kirigha",
                             Phone = "098767564",
                             Speaker = "Yes"
+                        },
+                        new
+                        {
+                            AttendeeId = 2,
+                            Email = "dorcis@gmail.com",
+                            FirstName = "Dorcis",
+                            LastName = "Kirigha",
+                            Phone = "098767564",
+                            Speaker = "No"
+                        },
+                        new
+                        {
+                            AttendeeId = 3,
+                            Email = "john@gmail.com",
+                            FirstName = "John",
+                            LastName = "Katua",
+                            Phone = "098767564",
+                            Speaker = "No"
+                        },
+                        new
+                        {
+                            AttendeeId = 4,
+                            Email = "flora@gmail.com",
+                            FirstName = "Flora",
+                            LastName = "Kirigha",
+                            Phone = "098767564",
+                            Speaker = "Yes"
+                        },
+                        new
+                        {
+                            AttendeeId = 5,
+                            Email = "synthia@gmail.com",
+                            FirstName = "Synthia",
+                            LastName = "Sau",
+                            Phone = "098767564",
+                            Speaker = "No"
                         });
                 });
 
@@ -115,23 +160,40 @@ namespace eventsApi.Migrations
                             EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011),
                             EventName = "Wedding",
                             Location = "Nyeri"
+                        },
+                        new
+                        {
+                            EventId = 2,
+                            Capacity = 50,
+                            Description = "Friend birthday party",
+                            EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2007),
+                            EventName = "Birthday",
+                            Location = "Nairobi"
+                        },
+                        new
+                        {
+                            EventId = 3,
+                            Capacity = 150,
+                            Description = "Farewell party for a friend",
+                            EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2009),
+                            EventName = "Farewell",
+                            Location = "Voi"
                         });
                 });
 
-            modelBuilder.Entity("eventsApi.Models.Attendee", b =>
+            modelBuilder.Entity("AttendeeEvent", b =>
                 {
-                    b.HasOne("eventsApi.Models.Event", "Event")
-                        .WithMany("Attendees")
-                        .HasForeignKey("EventId")
+                    b.HasOne("eventsApi.Models.Attendee", null)
+                        .WithMany()
+                        .HasForeignKey("AttendeesAttendeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("eventsApi.Models.Event", b =>
-                {
-                    b.Navigation("Attendees");
+                    b.HasOne("eventsApi.Models.Event", null)
+                        .WithMany()
+                        .HasForeignKey("EventsEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

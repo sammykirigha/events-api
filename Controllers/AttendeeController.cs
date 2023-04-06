@@ -30,6 +30,7 @@ namespace eventsApi.Controllers
             try
             {
                 var attendees = await _repository.Attendee.GetAllAttendeesAsync();
+                var events = await _repository.Event.GetAllEventsAsync();
 
                 var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
                 return Ok(attendeeResult);
@@ -64,28 +65,28 @@ namespace eventsApi.Controllers
             }
         }
 
-        [HttpGet("{id}/events")]
-        public async Task<IActionResult> GetAttendeesWithDetails(int id)
-        {
-            try
-            {
-                var attendee = await _repository.Attendee.GetAttendeeWithDetailsAsync(id);
-                if (attendee == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    //map
-                    return Ok(attendee);
-                }
-            }
-            catch (Exception ex)
-            {
+        // [HttpGet("{id}/events")]
+        // public async Task<IActionResult> GetAttendeesWithDetails(int id)
+        // {
+        //     try
+        //     {
+        //         var attendee = await _repository.Attendee.GetAttendeeWithDetailsAsync(id);
+        //         if (attendee == null)
+        //         {
+        //             return NotFound();
+        //         }
+        //         else
+        //         {
+        //             //map
+        //             return Ok(attendee);
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
 
-                return StatusCode(500, "Internal server error");
-            }
-        }
+        //         return StatusCode(500, "Internal server error");
+        //     }
+        // }
 
         [HttpPost]
         public async Task<IActionResult> CreateAttendee([FromBody] AttendeeForCreationDto attendee)

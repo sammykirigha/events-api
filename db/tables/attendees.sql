@@ -7,15 +7,13 @@ CREATE TABLE dbo.Attendees
     [FirstName] VARCHAR(100) NULL,
     [LastName] VARCHAR(100) NOT NULL,
     Speaker VARCHAR(100) NOT NULL,
-    EventId INT NOT NULL,
-    FOREIGN KEY (EventId) REFERENCES Events(EventId) ON DELETE CASCADE ON UPDATE CASCADE
 ) 
 GO
 
 INSERT INTO dbo.Attendees
-    (Email, Phone, [FirstName], LastName, Speaker, EventId )
+    (Email, Phone, [FirstName], LastName, Speaker )
 VALUES
-    ('sammy@gmail.com', '098765768', 'Samuel', 'Kirigha', 'Yes', 1)
+    ('sammy@gmail.com', '098765768', 'Samuel', 'Kirigha', 'Yes')
 
 
 SELECT *

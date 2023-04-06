@@ -10,7 +10,7 @@ namespace eventsApi.Contracts
     {
         Task<IEnumerable<Attendee>> GetAllAttendeesAsync();
         Task<Attendee> GetAttendeeByIdAsync(int attendeeId);
-        Task<Attendee> GetAttendeeWithDetailsAsync(int attendeeId);
+        // Task<Attendee> GetAttendeeWithDetailsAsync(int attendeeId);
         void CreateAttendee(Attendee attendee);
         void UpdateAttendee(Attendee attendee);
         void DeleteAttendee(Attendee attendee);

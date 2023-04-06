@@ -34,11 +34,7 @@ namespace eventsApi.Controllers
                 var attendees = await _repository.Attendee.GetAllAttendeesAsync();
                 var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
 
-                var events = (from event in events
-                  join attendee in attendees
-                  on event.EventId equals attendee.EventId
-                  );
-                  
+
                 return Ok(eventsResults);
             }
             catch (System.Exception)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using eventsApi.Models;
 
 namespace eventsApi.Dtos
 {
@@ -30,6 +31,6 @@ namespace eventsApi.Dtos
         public string? Speaker { get; set; }
 
         [Required(ErrorMessage = "EventName is required")]
-        public string? EventName { get; set; }
+        public ICollection<Event>? events { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace eventsApi.Models
@@ -31,8 +32,7 @@ namespace eventsApi.Models
         [Required(ErrorMessage = "Speaker is required")]
         public string? Speaker { get; set; }
 
-        [ForeignKey(nameof(Event))]
-        public int EventId { get; set; }
-        public Event? Event { get; set; }
+        [JsonIgnore]
+        public ICollection<Event>? Events { get; set; }
     }
 }
