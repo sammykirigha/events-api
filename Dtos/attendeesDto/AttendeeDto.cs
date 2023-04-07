@@ -30,7 +30,7 @@ namespace eventsApi.Dtos
         [Required(ErrorMessage = "Speaker is required")]
         public string? Speaker { get; set; }
 
-        [Required(ErrorMessage = "EventName is required")]
+        [Required(ErrorMessage = "list of events is required")]
         public ICollection<Event>? events { get; set; }
     }
 }

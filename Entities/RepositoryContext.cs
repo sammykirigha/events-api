@@ -19,8 +19,7 @@ namespace eventsApi.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<Event>().HasMany(x => Attendees).WithMany(y => y.Events).UsingEntity(j => j.ToTable("AttendeeEvent"));
-            // base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Event>().HasData(
                         new Event

@@ -93,6 +93,22 @@ namespace eventsApi.Migrations
                     { 3, 150, "Farewell party for a friend", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2009), "Farewell", "Voi" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "AttendeeEvent",
+                columns: new[] { "AttendeesAttendeeId", "EventsEventId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 1, 3 },
+                    { 2, 1 },
+                    { 2, 2 },
+                    { 3, 1 },
+                    { 3, 3 },
+                    { 4, 2 },
+                    { 5, 2 },
+                    { 5, 3 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AttendeeEvent_EventsEventId",
                 table: "AttendeeEvent",

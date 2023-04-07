@@ -26,7 +26,8 @@ namespace eventsApi.Dtos.eventsDto
         [Required(ErrorMessage = "Capacity is required")]
         public int? Capacity { get; set; }
 
-        public ICollection<Event>? Attendees { get; set; }
+        [Required(ErrorMessage = "list of attendees is required")]
+        public ICollection<Attendee>? Attendees { get; set; }
 
     }
 }

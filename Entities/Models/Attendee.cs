@@ -34,5 +34,6 @@ namespace eventsApi.Models
 
         [JsonIgnore]
         public ICollection<Event>? Events { get; set; }
+
     }
 }
