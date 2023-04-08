@@ -2,16 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eventsApi.Dtos.eventAttendeeDto;
 using eventsApi.Entities.Models;
 
 namespace eventsApi.Contracts
 {
-    public class IEventAttendeeRepository
+    public interface IEventAttendeeRepository : IRepositoryBase<EventAttendee>
     {
-        public interface IAttendeeRepository : IRepositoryBase<EventAttendee>
-        {
-            Task<IEnumerable<EventAttendee>> Get();
+        void CreateEventAttendee(EventAttendee eventAttendeeToCreate);
 
-        }
     }
+
 }

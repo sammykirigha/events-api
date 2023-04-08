@@ -44,6 +44,31 @@ namespace eventsApi.Controllers
             }
         }
 
+        [HttpGet("{id}", Name = "EventById")]
+        public async Task<IActionResult> GetAttendeeById(int id)
+        {
+            try
+            {
+                var eventReturned = await _repository.Event.GetEventByIdAsync(id);
+                if (eventReturned == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    //map
+                    var eventResult = _mapper.Map<EventDto>(eventReturned);
+                    return Ok(eventResult);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> CreateEvent([FromBody] EventToCreateDto eventToCreateDto)
         {
@@ -64,8 +89,8 @@ namespace eventsApi.Controllers
 
                 var createdEvent = _mapper.Map<Event>(eventEntity);
 
-                // return CreatedAtRoute("EventById", new { id = createdEvent.EventId }, createdEvent);
-                return Ok(createdEvent);
+                return CreatedAtRoute("EventById", new { id = createdEvent.EventId }, createdEvent);
+                // return Ok(createdEvent);
             }
             catch (Exception ex)
             {

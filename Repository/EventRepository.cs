@@ -20,6 +20,12 @@ namespace eventsApi.Repository
             return results;
         }
 
+        public async Task<Event> GetEventByIdAsync(int eventId)
+        {
+            var result = await FindByCondition(attendee => attendee.EventId.Equals(eventId)).Include(_ => _.Attendees).FirstOrDefaultAsync();
+            return result!;
+        }
+
         public void CreateEvent(Event eventToCreate)
         {
             Create(eventToCreate);
