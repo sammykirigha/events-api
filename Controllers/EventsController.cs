@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using eventsApi.Contracts;
 using eventsApi.Dtos.eventsDto;
+using eventsApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -42,5 +43,35 @@ namespace eventsApi.Controllers
                 throw;
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEvent([FromBody] EventToCreateDto eventToCreateDto)
+        {
+            try
+            {
+                if (eventToCreateDto == null)
+                {
+                    return BadRequest("eventToCreateDto object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+
+                var eventEntity = _mapper.Map<Event>(eventToCreateDto);
+                _repository.Event.CreateEvent(eventEntity);
+                await _repository.SaveAsync();
+
+                var createdEvent = _mapper.Map<EventDto>(eventEntity);
+
+                return CreatedAtRoute("AttendeeById", new { id = createdEvent.EventId }, createdEvent);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }

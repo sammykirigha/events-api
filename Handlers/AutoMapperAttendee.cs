@@ -16,6 +16,7 @@ namespace eventsApi.Handlers
             CreateMap<Attendee, AttendeeForCreationDto>().ReverseMap();
             CreateMap<Attendee, AttendeeDto>().ReverseMap();
             CreateMap<Event, EventDto>().ReverseMap();
+            CreateMap<Event, EventToCreateDto>().ReverseMap();
         }
     }
 }

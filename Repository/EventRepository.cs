@@ -19,5 +19,10 @@ namespace eventsApi.Repository
             var results = await FindAll().Include(_ => _.Attendees).OrderBy(ev => ev.EventId).ToListAsync();
             return results;
         }
+
+        public void CreateEvent(Event eventToCreate)
+        {
+            Create(eventToCreate);
+        }
     }
 }

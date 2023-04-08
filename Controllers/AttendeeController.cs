@@ -54,7 +54,8 @@ namespace eventsApi.Controllers
                 else
                 {
                     //map
-                    return Ok(attendee);
+                    var attendeeResult = _mapper.Map<AttendeeDto>(attendee);
+                    return Ok(attendeeResult);
                 }
             }
             catch (Exception ex)
