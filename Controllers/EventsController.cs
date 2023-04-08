@@ -62,14 +62,15 @@ namespace eventsApi.Controllers
                 _repository.Event.CreateEvent(eventEntity);
                 await _repository.SaveAsync();
 
-                var createdEvent = _mapper.Map<EventDto>(eventEntity);
+                var createdEvent = _mapper.Map<Event>(eventEntity);
 
-                return CreatedAtRoute("AttendeeById", new { id = createdEvent.EventId }, createdEvent);
+                // return CreatedAtRoute("EventById", new { id = createdEvent.EventId }, createdEvent);
+                return Ok(createdEvent);
             }
             catch (Exception ex)
             {
 
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
