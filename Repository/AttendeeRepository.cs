@@ -26,11 +26,6 @@ namespace eventsApi.Repository
             return result!;
         }
 
-        // public async Task<Attendee> GetAttendeeWithDetailsAsync(int attendeeId)
-        // {
-        //     var results = await FindByCondition(attendee => attendee.AttendeeId.Equals(attendeeId)).Include(ev => ev.events).FirstOrDefaultAsync();
-        //     return results!;
-        // }
 
         public void CreateAttendee(Attendee attendee)
         {
