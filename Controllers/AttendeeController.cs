@@ -107,19 +107,20 @@ namespace eventsApi.Controllers
                 _repository.Attendee.CreateAttendee(attendeeEntity);
                 await _repository.SaveAsync();
                 var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
-                var attendeeId = createdAttendee.AttendeeId;
 
                 var eventReturned = await _repository.Event.GetEventByIdAsync(eventId);
-                if (createdAttendee != null && eventReturned != null)
-                {
-                    var newAttendeeEvent = new EventAttendee
-                    {
-                        EventsEventId = eventReturned.EventId,
-                        AttendeesAttendeeId = attendeeId
-                    };
-                    _repository.EventAttendee.CreateEventAttendee(newAttendeeEvent);
-                    await _repository.SaveAsync();
-                }
+                eventReturned?.Attendees?.Add(attendeeEntity);
+                await _repository.SaveAsync();
+                // if (createdAttendee != null && eventReturned != null)
+                // {
+
+                //     var newAttendeeEvent = new EventAttendee
+                //     {
+                //         AttendeesAttendeeId = createdAttendee.AttendeeId,
+                //         EventsEventId = 
+                //     };
+                //     _repository.EventAttendee.CreateEventAttendee(newAttendeeEvent);
+                // }
 
 
                 return CreatedAtRoute("AttendeeById", new { id = createdAttendee!.AttendeeId }, createdAttendee);
