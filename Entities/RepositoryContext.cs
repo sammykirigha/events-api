@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eventsApi.Entities.Models;
 using eventsApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,9 +18,14 @@ namespace eventsApi.Entities
         public DbSet<Event> Events { get; set; }
         public DbSet<Attendee> Attendees { get; set; }
 
+        public DbSet<EventAttendee> AttendeeEvent { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<EventAttendee>()
+            .HasKey(ea => new { ea.AttendeesAttendeeId, ea.EventsEventId });
 
             modelBuilder.Entity<Event>().HasData(
                         new Event
@@ -109,7 +115,16 @@ namespace eventsApi.Entities
                 new { AttendeesAttendeeId = 5, EventsEventId = 3 },
                 new { AttendeesAttendeeId = 1, EventsEventId = 3 },
                 new { AttendeesAttendeeId = 3, EventsEventId = 3 }
- );
+             );
+
+            modelBuilder.Entity<EventAttendee>().HasKey(am => new
+            {
+                am.EventsEventId,
+                am.AttendeesAttendeeId
+            });
+
         }
+
+
     }
 }

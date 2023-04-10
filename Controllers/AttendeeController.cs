@@ -89,7 +89,7 @@ namespace eventsApi.Controllers
         //     }
         // }
 
-        [HttpPost("{id}")]
+        [HttpPost("create/{id}")]
         public async Task<IActionResult> CreateAttendee(int eventId, [FromBody] AttendeeForCreationDto attendee)
         {
             try
@@ -106,19 +106,28 @@ namespace eventsApi.Controllers
                 var attendeeEntity = _mapper.Map<Attendee>(attendee);
                 _repository.Attendee.CreateAttendee(attendeeEntity);
                 await _repository.SaveAsync();
-                _repository.EventAttendee.CreateEventAttendee(new EventAttendee
-                {
-                    EventsEventId = eventId,
-                    AttendeesAttendeeId = attendeeEntity.AttendeeId
-                });
                 var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
+                var attendeeId = createdAttendee.AttendeeId;
 
-                return CreatedAtRoute("AttendeeById", new { id = createdAttendee.AttendeeId }, createdAttendee);
+                var eventReturned = await _repository.Event.GetEventByIdAsync(eventId);
+                if (createdAttendee != null && eventReturned != null)
+                {
+                    var newAttendeeEvent = new EventAttendee
+                    {
+                        EventsEventId = eventReturned.EventId,
+                        AttendeesAttendeeId = attendeeId
+                    };
+                    _repository.EventAttendee.CreateEventAttendee(newAttendeeEvent);
+                    await _repository.SaveAsync();
+                }
+
+
+                return CreatedAtRoute("AttendeeById", new { id = createdAttendee!.AttendeeId }, createdAttendee);
             }
             catch (Exception ex)
             {
 
-                return StatusCode(500, $"Internal server error, {ex.Message}");
+                return StatusCode(500, $"Internal server error ???, {ex.Message}");
             }
         }
 
