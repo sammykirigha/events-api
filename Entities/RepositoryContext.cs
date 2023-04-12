@@ -12,20 +12,16 @@ namespace eventsApi.Entities
     {
         public RepositoryContext(DbContextOptions options) : base(options)
         {
-
         }
-
-        public DbSet<Event> Events { get; set; }
-        public DbSet<Attendee> Attendees { get; set; }
-
-        public DbSet<EventAttendee> AttendeeEvent { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<EventAttendee>()
-            .HasKey(ea => new { ea.AttendeesAttendeeId, ea.EventsEventId });
+            modelBuilder.Entity<EventAttendee>().HasKey(ea => new { ea.AttendeesAttendeeId, ea.EventsEventId });
+
+            modelBuilder.Entity<EventAttendee>().HasOne<Attendee>(x => x.Attendee).WithMany(y => y.EventAttendees).HasForeignKey(x => x.AttendeesAttendeeId);
+            modelBuilder.Entity<EventAttendee>().HasOne<Event>(x => x.Event).WithMany(y => y.EventAttendees).HasForeignKey(x => x.EventsEventId);
 
             modelBuilder.Entity<Event>().HasData(
                         new Event
@@ -105,26 +101,23 @@ namespace eventsApi.Entities
                 }
                 );
 
-            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("AttendeeEvent").HasData(
-                new { AttendeesAttendeeId = 1, EventsEventId = 1 },
-                new { AttendeesAttendeeId = 2, EventsEventId = 1 },
-                new { AttendeesAttendeeId = 3, EventsEventId = 1 },
-                new { AttendeesAttendeeId = 4, EventsEventId = 2 },
-                new { AttendeesAttendeeId = 5, EventsEventId = 2 },
-                new { AttendeesAttendeeId = 2, EventsEventId = 2 },
-                new { AttendeesAttendeeId = 5, EventsEventId = 3 },
-                new { AttendeesAttendeeId = 1, EventsEventId = 3 },
-                new { AttendeesAttendeeId = 3, EventsEventId = 3 }
-             );
-
-            modelBuilder.Entity<EventAttendee>().HasKey(am => new
-            {
-                am.EventsEventId,
-                am.AttendeesAttendeeId
-            });
+            // modelBuilder.SharedTypeEntity<Dictionary<string, object>>("AttendeeEventId").HasData(
+            //     new { AttendeesAttendeeId = 1, EventsEventId = 1 },
+            //     new { AttendeesAttendeeId = 2, EventsEventId = 1 },
+            //     new { AttendeesAttendeeId = 3, EventsEventId = 1 },
+            //     new { AttendeesAttendeeId = 4, EventsEventId = 2 },
+            //     new { AttendeesAttendeeId = 5, EventsEventId = 2 },
+            //     new { AttendeesAttendeeId = 2, EventsEventId = 2 },
+            //     new { AttendeesAttendeeId = 5, EventsEventId = 3 },
+            //     new { AttendeesAttendeeId = 1, EventsEventId = 3 },
+            //     new { AttendeesAttendeeId = 3, EventsEventId = 3 }
+            //  );
 
         }
 
 
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Attendee> Attendees { get; set; }
+        public DbSet<EventAttendee> AttendeeEvent { get; set; }
     }
 }

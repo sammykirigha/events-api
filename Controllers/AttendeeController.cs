@@ -62,7 +62,7 @@ namespace eventsApi.Controllers
             catch (Exception ex)
             {
 
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Internal server error, {ex.Message}");
             }
         }
 
@@ -89,8 +89,8 @@ namespace eventsApi.Controllers
         //     }
         // }
 
-        [HttpPost("create/{id}")]
-        public async Task<IActionResult> CreateAttendee(int eventId, [FromBody] AttendeeForCreationDto attendee)
+        [HttpPost]
+        public async Task<IActionResult> CreateAttendee([FromBody] AttendeeForCreationDto attendee)
         {
             try
             {
@@ -106,23 +106,17 @@ namespace eventsApi.Controllers
                 var attendeeEntity = _mapper.Map<Attendee>(attendee);
                 _repository.Attendee.CreateAttendee(attendeeEntity);
                 await _repository.SaveAsync();
-                var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
 
-                var eventReturned = await _repository.Event.GetEventByIdAsync(eventId);
-                eventReturned?.Attendees?.Add(attendeeEntity);
+                var eventattendee = new EventAttendee
+                {
+                    AttendeesAttendeeId = attendee.AttendeeId,
+                    EventsEventId = (int)(attendee.EventId)
+                };
+
+                _repository.EventAttendee.CreateEventAttendee(eventattendee);
                 await _repository.SaveAsync();
-                // if (createdAttendee != null && eventReturned != null)
-                // {
 
-                //     var newAttendeeEvent = new EventAttendee
-                //     {
-                //         AttendeesAttendeeId = createdAttendee.AttendeeId,
-                //         EventsEventId = 
-                //     };
-                //     _repository.EventAttendee.CreateEventAttendee(newAttendeeEvent);
-                // }
-
-
+                var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
                 return CreatedAtRoute("AttendeeById", new { id = createdAttendee!.AttendeeId }, createdAttendee);
             }
             catch (Exception ex)

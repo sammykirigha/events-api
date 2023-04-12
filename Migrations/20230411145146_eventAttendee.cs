@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eventsApi.Migrations
 {
     /// <inheritdoc />
-    public partial class manytomany : Migration
+    public partial class eventAttendee : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -91,22 +91,6 @@ namespace eventsApi.Migrations
                     { 1, 100, "A Friend wedding", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011), "Wedding", "Nyeri" },
                     { 2, 50, "Friend birthday party", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2007), "Birthday", "Nairobi" },
                     { 3, 150, "Farewell party for a friend", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2009), "Farewell", "Voi" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AttendeeEvent",
-                columns: new[] { "AttendeesAttendeeId", "EventsEventId" },
-                values: new object[,]
-                {
-                    { 1, 1 },
-                    { 1, 3 },
-                    { 2, 1 },
-                    { 2, 2 },
-                    { 3, 1 },
-                    { 3, 3 },
-                    { 4, 2 },
-                    { 5, 2 },
-                    { 5, 3 }
                 });
 
             migrationBuilder.CreateIndex(

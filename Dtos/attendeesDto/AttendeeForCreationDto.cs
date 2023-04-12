@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using eventsApi.Models;
 
 namespace eventsApi.Dtos
 {
@@ -29,7 +31,10 @@ namespace eventsApi.Dtos
         [Required(ErrorMessage = "Speaker is required")]
         public string? Speaker { get; set; }
 
-        [Required(ErrorMessage = "EventName is required")]
-        public string? EventName { get; set; }
+        [Required(ErrorMessage = "EventId is required")]
+        public int EventId { get; set; }
+
+        [JsonIgnore]
+        public IList<int>? EventIds { get; set; }
     }
 }

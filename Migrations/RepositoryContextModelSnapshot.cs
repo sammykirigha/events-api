@@ -35,53 +35,6 @@ namespace eventsApi.Migrations
                     b.HasIndex("EventsEventId");
 
                     b.ToTable("AttendeeEvent");
-
-                    b.HasData(
-                        new
-                        {
-                            AttendeesAttendeeId = 1,
-                            EventsEventId = 1
-                        },
-                        new
-                        {
-                            AttendeesAttendeeId = 2,
-                            EventsEventId = 1
-                        },
-                        new
-                        {
-                            AttendeesAttendeeId = 3,
-                            EventsEventId = 1
-                        },
-                        new
-                        {
-                            AttendeesAttendeeId = 4,
-                            EventsEventId = 2
-                        },
-                        new
-                        {
-                            AttendeesAttendeeId = 5,
-                            EventsEventId = 2
-                        },
-                        new
-                        {
-                            AttendeesAttendeeId = 2,
-                            EventsEventId = 2
-                        },
-                        new
-                        {
-                            AttendeesAttendeeId = 5,
-                            EventsEventId = 3
-                        },
-                        new
-                        {
-                            AttendeesAttendeeId = 1,
-                            EventsEventId = 3
-                        },
-                        new
-                        {
-                            AttendeesAttendeeId = 3,
-                            EventsEventId = 3
-                        });
                 });
 
             modelBuilder.Entity("eventsApi.Models.Attendee", b =>
