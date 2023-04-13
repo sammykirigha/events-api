@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eventsApi.Entities;
 
@@ -11,9 +12,11 @@ using eventsApi.Entities;
 namespace eventsApi.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20230413123816_initialMigration")]
+    partial class initialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,17 @@ namespace eventsApi.Migrations
                     b.Property<int>("EventsEventId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AttendeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
                     b.HasKey("AttendeesAttendeeId", "EventsEventId");
 
-                    b.HasIndex("EventsEventId");
+                    b.HasIndex("AttendeeId");
+
+                    b.HasIndex("EventId");
 
                     b.ToTable("EventAttendees", (string)null);
                 });
@@ -214,30 +225,16 @@ namespace eventsApi.Migrations
             modelBuilder.Entity("eventsApi.Entities.Models.EventAttendee", b =>
                 {
                     b.HasOne("eventsApi.Models.Attendee", "Attendee")
-                        .WithMany("EventAttendees")
-                        .HasForeignKey("AttendeesAttendeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("AttendeeId");
 
                     b.HasOne("eventsApi.Models.Event", "Event")
-                        .WithMany("EventAttendees")
-                        .HasForeignKey("EventsEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("EventId");
 
                     b.Navigation("Attendee");
 
                     b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("eventsApi.Models.Attendee", b =>
-                {
-                    b.Navigation("EventAttendees");
-                });
-
-            modelBuilder.Entity("eventsApi.Models.Event", b =>
-                {
-                    b.Navigation("EventAttendees");
                 });
 #pragma warning restore 612, 618
         }

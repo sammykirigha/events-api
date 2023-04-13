@@ -109,7 +109,7 @@ namespace eventsApi.Controllers
 
                 var eventattendee = new EventAttendee
                 {
-                    AttendeesAttendeeId = attendee.AttendeeId,
+                    AttendeesAttendeeId = attendeeEntity.AttendeeId,
                     EventsEventId = (int)(attendee.EventId)
                 };
 

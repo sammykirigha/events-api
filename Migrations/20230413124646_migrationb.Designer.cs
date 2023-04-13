@@ -12,8 +12,8 @@ using eventsApi.Entities;
 namespace eventsApi.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230411145146_eventAttendee")]
-    partial class eventAttendee
+    [Migration("20230413124646_migrationb")]
+    partial class migrationb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,29 @@ namespace eventsApi.Migrations
                     b.HasIndex("EventsEventId");
 
                     b.ToTable("AttendeeEvent");
+                });
+
+            modelBuilder.Entity("eventsApi.Entities.Models.EventAttendee", b =>
+                {
+                    b.Property<int>("AttendeesAttendeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventsEventId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AttendeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AttendeesAttendeeId", "EventsEventId");
+
+                    b.HasIndex("AttendeeId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("EventAttendees", (string)null);
                 });
 
             modelBuilder.Entity("eventsApi.Models.Attendee", b =>
@@ -197,6 +220,21 @@ namespace eventsApi.Migrations
                         .HasForeignKey("EventsEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("eventsApi.Entities.Models.EventAttendee", b =>
+                {
+                    b.HasOne("eventsApi.Models.Attendee", "Attendee")
+                        .WithMany()
+                        .HasForeignKey("AttendeeId");
+
+                    b.HasOne("eventsApi.Models.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId");
+
+                    b.Navigation("Attendee");
+
+                    b.Navigation("Event");
                 });
 #pragma warning restore 612, 618
         }

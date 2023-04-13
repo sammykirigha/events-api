@@ -20,9 +20,16 @@ namespace eventsApi.Entities
 
             modelBuilder.Entity<EventAttendee>().HasKey(ea => new { ea.AttendeesAttendeeId, ea.EventsEventId });
 
+            // modelBuilder.Entity<Event>().HasMany(e => e.Attendees).WithMany(e => e.Events);
+            // modelBuilder.Entity<Attendee>().HasMany(a => a.Events).WithMany(a => a.Attendees);
+
+            // modelBuilder.Entity<Event>().HasMany(e => e.Attendees).WithMany(e => e.Events).UsingEntity<Dictionary<string, object>>("EventAttendees", j => j.HasOne<Attendee>().WithMany().HasForeignKey("AttendeesAttendeeId"), j => j.HasOne<Event>().WithMany().HasForeignKey("EventsEventId"));
+
+
             modelBuilder.Entity<EventAttendee>().HasOne<Attendee>(x => x.Attendee).WithMany(y => y.EventAttendees).HasForeignKey(x => x.AttendeesAttendeeId);
             modelBuilder.Entity<EventAttendee>().HasOne<Event>(x => x.Event).WithMany(y => y.EventAttendees).HasForeignKey(x => x.EventsEventId);
 
+            modelBuilder.Entity<EventAttendee>().ToTable("EventAttendees");
             modelBuilder.Entity<Event>().HasData(
                         new Event
                         {
@@ -119,5 +126,7 @@ namespace eventsApi.Entities
         public DbSet<Event> Events { get; set; }
         public DbSet<Attendee> Attendees { get; set; }
         public DbSet<EventAttendee> AttendeeEvent { get; set; }
+
+
     }
 }

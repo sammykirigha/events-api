@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eventsApi.Migrations
 {
     /// <inheritdoc />
-    public partial class eventAttendee : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -71,6 +71,30 @@ namespace eventsApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EventAttendees",
+                columns: table => new
+                {
+                    EventsEventId = table.Column<int>(type: "int", nullable: false),
+                    AttendeesAttendeeId = table.Column<int>(type: "int", nullable: false),
+                    EventId = table.Column<int>(type: "int", nullable: true),
+                    AttendeeId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventAttendees", x => new { x.AttendeesAttendeeId, x.EventsEventId });
+                    table.ForeignKey(
+                        name: "FK_EventAttendees_Attendees_AttendeeId",
+                        column: x => x.AttendeeId,
+                        principalTable: "Attendees",
+                        principalColumn: "AttendeeId");
+                    table.ForeignKey(
+                        name: "FK_EventAttendees_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "EventId");
+                });
+
             migrationBuilder.InsertData(
                 table: "Attendees",
                 columns: new[] { "AttendeeId", "Email", "FirstName", "LastName", "Phone", "Speaker" },
@@ -97,6 +121,16 @@ namespace eventsApi.Migrations
                 name: "IX_AttendeeEvent_EventsEventId",
                 table: "AttendeeEvent",
                 column: "EventsEventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventAttendees_AttendeeId",
+                table: "EventAttendees",
+                column: "AttendeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventAttendees_EventId",
+                table: "EventAttendees",
+                column: "EventId");
         }
 
         /// <inheritdoc />
@@ -104,6 +138,9 @@ namespace eventsApi.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AttendeeEvent");
+
+            migrationBuilder.DropTable(
+                name: "EventAttendees");
 
             migrationBuilder.DropTable(
                 name: "Attendees");
