@@ -13,11 +13,11 @@ namespace eventsApi.Entities.Models
     public class EventAttendee
     {
         [ForeignKey("EventId")]
-        public int EventsEventId { get; set; }
+        public Guid EventsEventId { get; set; }
         public Event? Event { get; set; }
 
         [ForeignKey("AttendeeId")]
-        public int AttendeesAttendeeId { get; set; }
+        public Guid AttendeesAttendeeId { get; set; }
         public Attendee? Attendee { get; set; }
     }
 }

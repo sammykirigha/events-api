@@ -28,6 +28,7 @@ namespace eventsApi.Repository
 
         public void CreateEvent(Event eventToCreate)
         {
+            eventToCreate.EventId = Guid.NewGuid();
             Create(eventToCreate);
         }
     }

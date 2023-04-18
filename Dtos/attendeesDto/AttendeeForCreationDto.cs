@@ -32,9 +32,9 @@ namespace eventsApi.Dtos
         public string? Speaker { get; set; }
 
         [Required(ErrorMessage = "EventId is required")]
-        public int EventId { get; set; }
+        public Guid EventId { get; set; }
 
         [JsonIgnore]
-        public IList<int>? EventIds { get; set; }
+        public IList<Guid>? EventIds { get; set; }
     }
 }

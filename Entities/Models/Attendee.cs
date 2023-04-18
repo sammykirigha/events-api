@@ -12,7 +12,8 @@ namespace eventsApi.Models
     [Table("Attendees")]
     public class Attendee
     {
-        public int AttendeeId { get; set; }
+        [Key]
+        public Guid AttendeeId { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Please Provide a valid email")]

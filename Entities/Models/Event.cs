@@ -12,7 +12,8 @@ namespace eventsApi.Models
     [Table("Events")]
     public class Event
     {
-        public int EventId { get; set; }
+        [Key]
+        public Guid EventId { get; set; }
 
         [Required(ErrorMessage = "EventName is required")]
         [StringLength(60, ErrorMessage = "EventName can't be longer than 60 characters")]
