@@ -29,6 +29,7 @@ namespace eventsApi.Repository
 
         public void CreateAttendee(Attendee attendee)
         {
+            attendee.AttendeeId = Guid.NewGuid();
             Create(attendee);
         }
 

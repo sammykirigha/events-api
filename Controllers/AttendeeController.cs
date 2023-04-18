@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace eventsApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/attendees")]
     public class AttendeeController : ControllerBase
     {
         private IRepositoryWrapper _repository;
@@ -26,7 +26,7 @@ namespace eventsApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllOwners()
+        public async Task<IActionResult> GetAllAttendees()
         {
             try
             {
@@ -110,7 +110,7 @@ namespace eventsApi.Controllers
                 var eventattendee = new EventAttendee
                 {
                     AttendeesAttendeeId = attendeeEntity.AttendeeId,
-                    EventsEventId = (int)(attendee.EventId)
+                    EventsEventId = attendee.EventId
                 };
 
                 _repository.EventAttendee.CreateEventAttendee(eventattendee);

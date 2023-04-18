@@ -24,11 +24,11 @@ namespace eventsApi.Migrations
 
             modelBuilder.Entity("AttendeeEvent", b =>
                 {
-                    b.Property<int>("AttendeesAttendeeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AttendeesAttendeeId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("EventsEventId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EventsEventId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("AttendeesAttendeeId", "EventsEventId");
 
@@ -39,11 +39,11 @@ namespace eventsApi.Migrations
 
             modelBuilder.Entity("eventsApi.Entities.Models.EventAttendee", b =>
                 {
-                    b.Property<int>("AttendeesAttendeeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AttendeesAttendeeId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("EventsEventId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EventsEventId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("AttendeesAttendeeId", "EventsEventId");
 
@@ -54,11 +54,9 @@ namespace eventsApi.Migrations
 
             modelBuilder.Entity("eventsApi.Models.Attendee", b =>
                 {
-                    b.Property<int>("AttendeeId")
+                    b.Property<Guid>("AttendeeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendeeId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -90,7 +88,7 @@ namespace eventsApi.Migrations
                     b.HasData(
                         new
                         {
-                            AttendeeId = 1,
+                            AttendeeId = new Guid("d28888e9-2ba9-473a-a40f-e38cb54f9b35"),
                             Email = "sammy@gmail.com",
                             FirstName = "Samuel",
                             LastName = "Kirigha",
@@ -99,7 +97,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            AttendeeId = 2,
+                            AttendeeId = new Guid("da2fd609-d754-4feb-8acd-c4f9ff13ba96"),
                             Email = "dorcis@gmail.com",
                             FirstName = "Dorcis",
                             LastName = "Kirigha",
@@ -108,7 +106,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            AttendeeId = 3,
+                            AttendeeId = new Guid("2902b665-1190-4c70-9915-b9c2d7680450"),
                             Email = "john@gmail.com",
                             FirstName = "John",
                             LastName = "Katua",
@@ -117,7 +115,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            AttendeeId = 4,
+                            AttendeeId = new Guid("102b566b-ba1f-404c-b2df-e2cde39ade09"),
                             Email = "flora@gmail.com",
                             FirstName = "Flora",
                             LastName = "Kirigha",
@@ -126,7 +124,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            AttendeeId = 5,
+                            AttendeeId = new Guid("5b3621c0-7b12-4e80-9c8b-3398cba7ee05"),
                             Email = "synthia@gmail.com",
                             FirstName = "Synthia",
                             LastName = "Sau",
@@ -137,11 +135,9 @@ namespace eventsApi.Migrations
 
             modelBuilder.Entity("eventsApi.Models.Event", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<Guid>("EventId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Capacity")
                         .IsRequired()
@@ -169,7 +165,7 @@ namespace eventsApi.Migrations
                     b.HasData(
                         new
                         {
-                            EventId = 1,
+                            EventId = new Guid("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"),
                             Capacity = 100,
                             Description = "A Friend wedding",
                             EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011),
@@ -178,7 +174,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            EventId = 2,
+                            EventId = new Guid("d173e20d-159e-4127-9ce9-b0ac2564ad97"),
                             Capacity = 50,
                             Description = "Friend birthday party",
                             EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2007),
@@ -187,7 +183,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            EventId = 3,
+                            EventId = new Guid("d8663e5e-7494-4f81-8739-6e0de1bea7ee"),
                             Capacity = 150,
                             Description = "Farewell party for a friend",
                             EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2009),

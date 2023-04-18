@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eventsApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class initialMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,8 +17,7 @@ namespace eventsApi.Migrations
                 name: "Attendees",
                 columns: table => new
                 {
-                    AttendeeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AttendeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
@@ -34,8 +33,7 @@ namespace eventsApi.Migrations
                 name: "Events",
                 columns: table => new
                 {
-                    EventId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EventName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     EventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -51,8 +49,8 @@ namespace eventsApi.Migrations
                 name: "AttendeeEvent",
                 columns: table => new
                 {
-                    AttendeesAttendeeId = table.Column<int>(type: "int", nullable: false),
-                    EventsEventId = table.Column<int>(type: "int", nullable: false)
+                    AttendeesAttendeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventsEventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,24 +73,24 @@ namespace eventsApi.Migrations
                 name: "EventAttendees",
                 columns: table => new
                 {
-                    EventsEventId = table.Column<int>(type: "int", nullable: false),
-                    AttendeesAttendeeId = table.Column<int>(type: "int", nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: true),
-                    AttendeeId = table.Column<int>(type: "int", nullable: true)
+                    EventsEventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AttendeesAttendeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EventAttendees", x => new { x.AttendeesAttendeeId, x.EventsEventId });
                     table.ForeignKey(
-                        name: "FK_EventAttendees_Attendees_AttendeeId",
-                        column: x => x.AttendeeId,
+                        name: "FK_EventAttendees_Attendees_AttendeesAttendeeId",
+                        column: x => x.AttendeesAttendeeId,
                         principalTable: "Attendees",
-                        principalColumn: "AttendeeId");
+                        principalColumn: "AttendeeId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EventAttendees_Events_EventId",
-                        column: x => x.EventId,
+                        name: "FK_EventAttendees_Events_EventsEventId",
+                        column: x => x.EventsEventId,
                         principalTable: "Events",
-                        principalColumn: "EventId");
+                        principalColumn: "EventId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -100,11 +98,11 @@ namespace eventsApi.Migrations
                 columns: new[] { "AttendeeId", "Email", "FirstName", "LastName", "Phone", "Speaker" },
                 values: new object[,]
                 {
-                    { 1, "sammy@gmail.com", "Samuel", "Kirigha", "098767564", "Yes" },
-                    { 2, "dorcis@gmail.com", "Dorcis", "Kirigha", "098767564", "No" },
-                    { 3, "john@gmail.com", "John", "Katua", "098767564", "No" },
-                    { 4, "flora@gmail.com", "Flora", "Kirigha", "098767564", "Yes" },
-                    { 5, "synthia@gmail.com", "Synthia", "Sau", "098767564", "No" }
+                    { new Guid("102b566b-ba1f-404c-b2df-e2cde39ade09"), "flora@gmail.com", "Flora", "Kirigha", "098767564", "Yes" },
+                    { new Guid("2902b665-1190-4c70-9915-b9c2d7680450"), "john@gmail.com", "John", "Katua", "098767564", "No" },
+                    { new Guid("5b3621c0-7b12-4e80-9c8b-3398cba7ee05"), "synthia@gmail.com", "Synthia", "Sau", "098767564", "No" },
+                    { new Guid("d28888e9-2ba9-473a-a40f-e38cb54f9b35"), "sammy@gmail.com", "Samuel", "Kirigha", "098767564", "Yes" },
+                    { new Guid("da2fd609-d754-4feb-8acd-c4f9ff13ba96"), "dorcis@gmail.com", "Dorcis", "Kirigha", "098767564", "No" }
                 });
 
             migrationBuilder.InsertData(
@@ -112,9 +110,9 @@ namespace eventsApi.Migrations
                 columns: new[] { "EventId", "Capacity", "Description", "EventDate", "EventName", "Location" },
                 values: new object[,]
                 {
-                    { 1, 100, "A Friend wedding", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011), "Wedding", "Nyeri" },
-                    { 2, 50, "Friend birthday party", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2007), "Birthday", "Nairobi" },
-                    { 3, 150, "Farewell party for a friend", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2009), "Farewell", "Voi" }
+                    { new Guid("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"), 100, "A Friend wedding", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011), "Wedding", "Nyeri" },
+                    { new Guid("d173e20d-159e-4127-9ce9-b0ac2564ad97"), 50, "Friend birthday party", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2007), "Birthday", "Nairobi" },
+                    { new Guid("d8663e5e-7494-4f81-8739-6e0de1bea7ee"), 150, "Farewell party for a friend", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2009), "Farewell", "Voi" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -123,14 +121,9 @@ namespace eventsApi.Migrations
                 column: "EventsEventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventAttendees_AttendeeId",
+                name: "IX_EventAttendees_EventsEventId",
                 table: "EventAttendees",
-                column: "AttendeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventAttendees_EventId",
-                table: "EventAttendees",
-                column: "EventId");
+                column: "EventsEventId");
         }
 
         /// <inheritdoc />
