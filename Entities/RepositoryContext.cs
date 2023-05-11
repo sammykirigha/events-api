@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using eventsApi.Entities.Models;
 using eventsApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,22 +17,12 @@ namespace eventsApi.Entities
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<EventAttendee>().HasKey(ea => new { ea.AttendeesAttendeeId, ea.EventsEventId });
-
-            // modelBuilder.Entity<Event>().HasMany(e => e.Attendees).WithMany(e => e.Events).UsingEntity<Dictionary<string, object>>("EventAttendees", j => j.HasOne<Attendee>().WithMany().HasForeignKey("AttendeesAttendeeId"), j => j.HasOne<Event>().WithMany().HasForeignKey("EventsEventId"));
-
-
-            modelBuilder.Entity<EventAttendee>().HasOne<Attendee>(x => x.Attendee).WithMany(y => y.EventAttendees).HasForeignKey(x => x.AttendeesAttendeeId);
-            modelBuilder.Entity<EventAttendee>().HasOne<Event>(x => x.Event).WithMany(y => y.EventAttendees).HasForeignKey(x => x.EventsEventId);
-
-            modelBuilder.Entity<EventAttendee>().ToTable("EventAttendees");
-
             modelBuilder.Entity<Event>().HasData(
                         new Event
                         {
                             EventId = Guid.Parse("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"),
                             EventName = "Wedding",
-                            EventDate = new DateTime(2023 - 04 - 08),
+                            EventDate = new DateTime(2023, 04, 08),
                             Description = "A Friend wedding",
                             Location = "Nyeri",
                             Capacity = 100
@@ -42,7 +31,7 @@ namespace eventsApi.Entities
                        {
                            EventId = Guid.Parse("d173e20d-159e-4127-9ce9-b0ac2564ad97"),
                            EventName = "Birthday",
-                           EventDate = new DateTime(2023 - 04 - 12),
+                           EventDate = new DateTime(2023, 04, 12),
                            Description = "Friend birthday party",
                            Location = "Nairobi",
                            Capacity = 50
@@ -51,7 +40,7 @@ namespace eventsApi.Entities
                        {
                            EventId = Guid.Parse("d8663e5e-7494-4f81-8739-6e0de1bea7ee"),
                            EventName = "Farewell",
-                           EventDate = new DateTime(2023 - 04 - 10),
+                           EventDate = new DateTime(2023, 04, 10),
                            Description = "Farewell party for a friend",
                            Location = "Voi",
                            Capacity = 150
@@ -123,8 +112,5 @@ namespace eventsApi.Entities
 
         public DbSet<Event> Events { get; set; }
         public DbSet<Attendee> Attendees { get; set; }
-        public DbSet<EventAttendee> AttendeeEvent { get; set; }
-
-
     }
 }

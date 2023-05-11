@@ -9,7 +9,7 @@ namespace eventsApi.Dtos
 {
     public class AttendeeDto
     {
-        public int AttendeeId { get; set; }
+        public Guid AttendeeId { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Please Provide a valid email")]
@@ -31,6 +31,6 @@ namespace eventsApi.Dtos
         public string? Speaker { get; set; }
 
         [Required(ErrorMessage = "list of events is required")]
-        public ICollection<Event>? events { get; set; }
+        public IList<Event>? events { get; set; }
     }
 }

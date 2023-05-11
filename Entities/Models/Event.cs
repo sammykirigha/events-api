@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using eventsApi.Entities.Models;
 
 namespace eventsApi.Models
 {
@@ -20,7 +19,7 @@ namespace eventsApi.Models
         public string? EventName { get; set; }
 
         [Required(ErrorMessage = "EventDate is required")]
-        public DateTime EventDate { get; set; }
+        public DateTimeOffset EventDate { get; set; }
 
         [Required(ErrorMessage = "Location is required")]
         public string? Location { get; set; }
@@ -31,11 +30,6 @@ namespace eventsApi.Models
         public int? Capacity { get; set; }
 
         [JsonIgnore]
-        public List<Attendee>? Attendees { get; set; }
-
-        [NotMapped]
-        public IList<EventAttendee>? EventAttendees { get; set; }
-
-
+        public IList<Attendee>? Attendees { get; set; }
     }
 }

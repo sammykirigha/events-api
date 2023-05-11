@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eventsApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigrations : Migration
+    public partial class MyFirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +35,7 @@ namespace eventsApi.Migrations
                 {
                     EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EventName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    EventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EventDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Capacity = table.Column<int>(type: "int", nullable: false)
@@ -69,30 +69,6 @@ namespace eventsApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "EventAttendees",
-                columns: table => new
-                {
-                    EventsEventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AttendeesAttendeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventAttendees", x => new { x.AttendeesAttendeeId, x.EventsEventId });
-                    table.ForeignKey(
-                        name: "FK_EventAttendees_Attendees_AttendeesAttendeeId",
-                        column: x => x.AttendeesAttendeeId,
-                        principalTable: "Attendees",
-                        principalColumn: "AttendeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EventAttendees_Events_EventsEventId",
-                        column: x => x.EventsEventId,
-                        principalTable: "Events",
-                        principalColumn: "EventId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Attendees",
                 columns: new[] { "AttendeeId", "Email", "FirstName", "LastName", "Phone", "Speaker" },
@@ -110,19 +86,14 @@ namespace eventsApi.Migrations
                 columns: new[] { "EventId", "Capacity", "Description", "EventDate", "EventName", "Location" },
                 values: new object[,]
                 {
-                    { new Guid("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"), 100, "A Friend wedding", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011), "Wedding", "Nyeri" },
-                    { new Guid("d173e20d-159e-4127-9ce9-b0ac2564ad97"), 50, "Friend birthday party", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2007), "Birthday", "Nairobi" },
-                    { new Guid("d8663e5e-7494-4f81-8739-6e0de1bea7ee"), 150, "Farewell party for a friend", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2009), "Farewell", "Voi" }
+                    { new Guid("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"), 100, "A Friend wedding", new DateTimeOffset(new DateTime(2023, 4, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)), "Wedding", "Nyeri" },
+                    { new Guid("d173e20d-159e-4127-9ce9-b0ac2564ad97"), 50, "Friend birthday party", new DateTimeOffset(new DateTime(2023, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)), "Birthday", "Nairobi" },
+                    { new Guid("d8663e5e-7494-4f81-8739-6e0de1bea7ee"), 150, "Farewell party for a friend", new DateTimeOffset(new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)), "Farewell", "Voi" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AttendeeEvent_EventsEventId",
                 table: "AttendeeEvent",
-                column: "EventsEventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventAttendees_EventsEventId",
-                table: "EventAttendees",
                 column: "EventsEventId");
         }
 
@@ -131,9 +102,6 @@ namespace eventsApi.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AttendeeEvent");
-
-            migrationBuilder.DropTable(
-                name: "EventAttendees");
 
             migrationBuilder.DropTable(
                 name: "Attendees");

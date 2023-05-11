@@ -37,21 +37,6 @@ namespace eventsApi.Migrations
                     b.ToTable("AttendeeEvent");
                 });
 
-            modelBuilder.Entity("eventsApi.Entities.Models.EventAttendee", b =>
-                {
-                    b.Property<Guid>("AttendeesAttendeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EventsEventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AttendeesAttendeeId", "EventsEventId");
-
-                    b.HasIndex("EventsEventId");
-
-                    b.ToTable("EventAttendees", (string)null);
-                });
-
             modelBuilder.Entity("eventsApi.Models.Attendee", b =>
                 {
                     b.Property<Guid>("AttendeeId")
@@ -146,8 +131,8 @@ namespace eventsApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EventDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("EventDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("EventName")
                         .IsRequired()
@@ -168,7 +153,7 @@ namespace eventsApi.Migrations
                             EventId = new Guid("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"),
                             Capacity = 100,
                             Description = "A Friend wedding",
-                            EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011),
+                            EventDate = new DateTimeOffset(new DateTime(2023, 4, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
                             EventName = "Wedding",
                             Location = "Nyeri"
                         },
@@ -177,7 +162,7 @@ namespace eventsApi.Migrations
                             EventId = new Guid("d173e20d-159e-4127-9ce9-b0ac2564ad97"),
                             Capacity = 50,
                             Description = "Friend birthday party",
-                            EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2007),
+                            EventDate = new DateTimeOffset(new DateTime(2023, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
                             EventName = "Birthday",
                             Location = "Nairobi"
                         },
@@ -186,7 +171,7 @@ namespace eventsApi.Migrations
                             EventId = new Guid("d8663e5e-7494-4f81-8739-6e0de1bea7ee"),
                             Capacity = 150,
                             Description = "Farewell party for a friend",
-                            EventDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2009),
+                            EventDate = new DateTimeOffset(new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
                             EventName = "Farewell",
                             Location = "Voi"
                         });
@@ -205,35 +190,6 @@ namespace eventsApi.Migrations
                         .HasForeignKey("EventsEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("eventsApi.Entities.Models.EventAttendee", b =>
-                {
-                    b.HasOne("eventsApi.Models.Attendee", "Attendee")
-                        .WithMany("EventAttendees")
-                        .HasForeignKey("AttendeesAttendeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eventsApi.Models.Event", "Event")
-                        .WithMany("EventAttendees")
-                        .HasForeignKey("EventsEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Attendee");
-
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("eventsApi.Models.Attendee", b =>
-                {
-                    b.Navigation("EventAttendees");
-                });
-
-            modelBuilder.Entity("eventsApi.Models.Event", b =>
-                {
-                    b.Navigation("EventAttendees");
                 });
 #pragma warning restore 612, 618
         }

@@ -28,24 +28,20 @@ namespace eventsApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllEvents()
         {
-
             try
             {
                 var events = await _repository.Event.GetAllEventsAsync();
                 var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
-
-
                 return Ok(eventsResults);
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }
 
         [HttpGet("{id}", Name = "EventById")]
-        public async Task<IActionResult> GetAttendeeById(int id)
+        public async Task<IActionResult> GetAttendeeById(Guid id)
         {
             try
             {
@@ -87,14 +83,11 @@ namespace eventsApi.Controllers
                 _repository.Event.CreateEvent(eventEntity);
                 await _repository.SaveAsync();
 
-                var createdEvent = _mapper.Map<Event>(eventEntity);
-
+                var createdEvent = _mapper.Map<CreatedEventDto>(eventEntity);
                 return CreatedAtRoute("EventById", new { id = createdEvent.EventId }, createdEvent);
-                // return Ok(createdEvent);
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }

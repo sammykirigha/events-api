@@ -9,14 +9,14 @@ namespace eventsApi.Dtos.eventsDto
 {
     public class EventDto
     {
-        public int EventId { get; set; }
+        public Guid EventId { get; set; }
 
         [Required(ErrorMessage = "EventName is required")]
         [StringLength(60, ErrorMessage = "EventName can't be longer than 60 characters")]
         public string? EventName { get; set; }
 
         [Required(ErrorMessage = "EventDate is required")]
-        public DateTime EventDate { get; set; }
+        public DateTimeOffset EventDate { get; set; }
 
         [Required(ErrorMessage = "Location is required")]
         public string? Location { get; set; }
@@ -27,7 +27,7 @@ namespace eventsApi.Dtos.eventsDto
         public int? Capacity { get; set; }
 
         [Required(ErrorMessage = "list of attendees is required")]
-        public ICollection<Attendee>? Attendees { get; set; }
+        public IList<Attendee>? Attendees { get; set; }
 
     }
 }

@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using eventsApi.Entities.Models;
 
 namespace eventsApi.Models
 {
@@ -35,10 +34,7 @@ namespace eventsApi.Models
         public string? Speaker { get; set; }
 
         [JsonIgnore]
-        public List<Event>? Events { get; set; }
-
-        [NotMapped]
-        public IList<EventAttendee>? EventAttendees { get; set; }
+        public IList<Event>? Events { get; set; }
 
     }
 }

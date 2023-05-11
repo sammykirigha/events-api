@@ -10,7 +10,7 @@ namespace eventsApi.Contracts
     {
         Task<IEnumerable<Event>> GetAllEventsAsync();
 
-        Task<Event> GetEventByIdAsync(int eventId);
+        Task<Event> GetEventByIdAsync(Guid eventId);
 
         void CreateEvent(Event eventToCreate);
     }

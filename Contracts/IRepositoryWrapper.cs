@@ -9,8 +9,6 @@ namespace eventsApi.Contracts
     {
         IEventRepository Event { get; }
         IAttendeeRepository Attendee { get; }
-
-        IEventAttendeeRepository EventAttendee { get; }
         Task SaveAsync();
     }
 }

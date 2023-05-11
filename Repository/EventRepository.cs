@@ -20,7 +20,7 @@ namespace eventsApi.Repository
             return results;
         }
 
-        public async Task<Event> GetEventByIdAsync(int eventId)
+        public async Task<Event> GetEventByIdAsync(Guid eventId)
         {
             var result = await FindByCondition(attendee => attendee.EventId.Equals(eventId)).Include(_ => _.Attendees).FirstOrDefaultAsync();
             return result!;

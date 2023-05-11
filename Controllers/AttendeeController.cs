@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using eventsApi.Contracts;
 using eventsApi.Dtos;
-using eventsApi.Entities.Models;
+using eventsApi.Dtos.eventsDto;
 using eventsApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,13 +31,11 @@ namespace eventsApi.Controllers
             try
             {
                 var attendees = await _repository.Attendee.GetAllAttendeesAsync();
-
                 var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
                 return Ok(attendeeResult);
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
@@ -90,7 +88,7 @@ namespace eventsApi.Controllers
         // }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAttendee([FromBody] AttendeeForCreationDto attendee)
+        public async Task<IActionResult> CreateAttendee([FromBody] AttendeeForCreationDto attendee, [FromQuery] Guid eventId)
         {
             try
             {
@@ -105,15 +103,6 @@ namespace eventsApi.Controllers
 
                 var attendeeEntity = _mapper.Map<Attendee>(attendee);
                 _repository.Attendee.CreateAttendee(attendeeEntity);
-                await _repository.SaveAsync();
-
-                var eventattendee = new EventAttendee
-                {
-                    AttendeesAttendeeId = attendeeEntity.AttendeeId,
-                    EventsEventId = attendee.EventId
-                };
-
-                _repository.EventAttendee.CreateEventAttendee(eventattendee);
                 await _repository.SaveAsync();
 
                 var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
