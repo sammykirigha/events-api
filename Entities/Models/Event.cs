@@ -12,7 +12,7 @@ namespace eventsApi.Models
     public class Event
     {
         [Key]
-        public Guid EventId { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "EventName is required")]
         [StringLength(60, ErrorMessage = "EventName can't be longer than 60 characters")]
@@ -29,7 +29,8 @@ namespace eventsApi.Models
         [Required(ErrorMessage = "Capacity is required")]
         public int? Capacity { get; set; }
 
-        [JsonIgnore]
-        public IList<Attendee>? Attendees { get; set; }
+        public List<Attendee> Attendees {get;} = new();
+        
+        public List<AttendeeEvent> AttendeeEvents { get; } = new();
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eventsApi.Migrations
 {
     /// <inheritdoc />
-    public partial class MyFirstMigration : Migration
+    public partial class secondMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace eventsApi.Migrations
                 name: "Attendees",
                 columns: table => new
                 {
-                    AttendeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
@@ -26,14 +26,14 @@ namespace eventsApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attendees", x => x.AttendeeId);
+                    table.PrimaryKey("PK_Attendees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
-                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EventName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     EventDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -42,36 +42,36 @@ namespace eventsApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.EventId);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AttendeeEvent",
+                name: "AttendeeEvents",
                 columns: table => new
                 {
-                    AttendeesAttendeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventsEventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AttendeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AttendeeEvent", x => new { x.AttendeesAttendeeId, x.EventsEventId });
+                    table.PrimaryKey("PK_AttendeeEvents", x => new { x.AttendeeId, x.EventId });
                     table.ForeignKey(
-                        name: "FK_AttendeeEvent_Attendees_AttendeesAttendeeId",
-                        column: x => x.AttendeesAttendeeId,
+                        name: "FK_AttendeeEvents_Attendees_AttendeeId",
+                        column: x => x.AttendeeId,
                         principalTable: "Attendees",
-                        principalColumn: "AttendeeId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AttendeeEvent_Events_EventsEventId",
-                        column: x => x.EventsEventId,
+                        name: "FK_AttendeeEvents_Events_EventId",
+                        column: x => x.EventId,
                         principalTable: "Events",
-                        principalColumn: "EventId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Attendees",
-                columns: new[] { "AttendeeId", "Email", "FirstName", "LastName", "Phone", "Speaker" },
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "Phone", "Speaker" },
                 values: new object[,]
                 {
                     { new Guid("102b566b-ba1f-404c-b2df-e2cde39ade09"), "flora@gmail.com", "Flora", "Kirigha", "098767564", "Yes" },
@@ -83,7 +83,7 @@ namespace eventsApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Events",
-                columns: new[] { "EventId", "Capacity", "Description", "EventDate", "EventName", "Location" },
+                columns: new[] { "Id", "Capacity", "Description", "EventDate", "EventName", "Location" },
                 values: new object[,]
                 {
                     { new Guid("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"), 100, "A Friend wedding", new DateTimeOffset(new DateTime(2023, 4, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)), "Wedding", "Nyeri" },
@@ -92,16 +92,16 @@ namespace eventsApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AttendeeEvent_EventsEventId",
-                table: "AttendeeEvent",
-                column: "EventsEventId");
+                name: "IX_AttendeeEvents_EventId",
+                table: "AttendeeEvents",
+                column: "EventId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AttendeeEvent");
+                name: "AttendeeEvents");
 
             migrationBuilder.DropTable(
                 name: "Attendees");

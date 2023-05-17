@@ -13,6 +13,8 @@ namespace eventsApi.Repository
         private IEventRepository _event;
         private IAttendeeRepository _attendee;
 
+        private IAttendeeEventRepository _attendeeevent;
+
         public IEventRepository Event
         {
             get
@@ -34,6 +36,17 @@ namespace eventsApi.Repository
                     _attendee = new AttendeeRepository(_repoContext);
                 }
                 return _attendee;
+            }
+        }
+        public IAttendeeEventRepository AttendeeEvent
+        {
+            get
+            {
+                if (_attendeeevent == null)
+                {
+                    _attendeeevent = new AttendeeEventRepository(_repoContext);
+                }
+                return _attendeeevent;
             }
         }
 

@@ -16,20 +16,21 @@ namespace eventsApi.Repository
 
         public async Task<IEnumerable<Attendee>> GetAllAttendeesAsync()
         {
-            var results = await FindAll().Include(a => a.Events).OrderBy(att => att.AttendeeId).ToListAsync();
+            var results = await FindAll().OrderBy(att => att.Id).ToListAsync();
             return results;
         }
 
-        public async Task<Attendee> GetAttendeeByIdAsync(int attendeeId)
+        public async Task<Attendee> GetAttendeeByIdAsync(Guid id)
         {
-            var result = await FindByCondition(attendee => attendee.AttendeeId.Equals(attendeeId)).Include(_ => _.Events).FirstOrDefaultAsync();
+            var result = await FindByCondition(attendee => attendee.Id.Equals(id)).FirstOrDefaultAsync();
             return result!;
         }
 
 
         public void CreateAttendee(Attendee attendee)
         {
-            attendee.AttendeeId = Guid.NewGuid();
+            attendee.Id = Guid.NewGuid();
+            
             Create(attendee);
         }
 

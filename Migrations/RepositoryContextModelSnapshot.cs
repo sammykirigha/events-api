@@ -17,29 +17,14 @@ namespace eventsApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AttendeeEvent", b =>
-                {
-                    b.Property<Guid>("AttendeesAttendeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EventsEventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AttendeesAttendeeId", "EventsEventId");
-
-                    b.HasIndex("EventsEventId");
-
-                    b.ToTable("AttendeeEvent");
-                });
-
             modelBuilder.Entity("eventsApi.Models.Attendee", b =>
                 {
-                    b.Property<Guid>("AttendeeId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -66,14 +51,14 @@ namespace eventsApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AttendeeId");
+                    b.HasKey("Id");
 
                     b.ToTable("Attendees");
 
                     b.HasData(
                         new
                         {
-                            AttendeeId = new Guid("d28888e9-2ba9-473a-a40f-e38cb54f9b35"),
+                            Id = new Guid("d28888e9-2ba9-473a-a40f-e38cb54f9b35"),
                             Email = "sammy@gmail.com",
                             FirstName = "Samuel",
                             LastName = "Kirigha",
@@ -82,7 +67,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            AttendeeId = new Guid("da2fd609-d754-4feb-8acd-c4f9ff13ba96"),
+                            Id = new Guid("da2fd609-d754-4feb-8acd-c4f9ff13ba96"),
                             Email = "dorcis@gmail.com",
                             FirstName = "Dorcis",
                             LastName = "Kirigha",
@@ -91,7 +76,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            AttendeeId = new Guid("2902b665-1190-4c70-9915-b9c2d7680450"),
+                            Id = new Guid("2902b665-1190-4c70-9915-b9c2d7680450"),
                             Email = "john@gmail.com",
                             FirstName = "John",
                             LastName = "Katua",
@@ -100,7 +85,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            AttendeeId = new Guid("102b566b-ba1f-404c-b2df-e2cde39ade09"),
+                            Id = new Guid("102b566b-ba1f-404c-b2df-e2cde39ade09"),
                             Email = "flora@gmail.com",
                             FirstName = "Flora",
                             LastName = "Kirigha",
@@ -109,7 +94,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            AttendeeId = new Guid("5b3621c0-7b12-4e80-9c8b-3398cba7ee05"),
+                            Id = new Guid("5b3621c0-7b12-4e80-9c8b-3398cba7ee05"),
                             Email = "synthia@gmail.com",
                             FirstName = "Synthia",
                             LastName = "Sau",
@@ -118,9 +103,24 @@ namespace eventsApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("eventsApi.Models.AttendeeEvent", b =>
+                {
+                    b.Property<Guid>("AttendeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AttendeeId", "EventId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("AttendeeEvents");
+                });
+
             modelBuilder.Entity("eventsApi.Models.Event", b =>
                 {
-                    b.Property<Guid>("EventId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -143,14 +143,14 @@ namespace eventsApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EventId");
+                    b.HasKey("Id");
 
                     b.ToTable("Events");
 
                     b.HasData(
                         new
                         {
-                            EventId = new Guid("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"),
+                            Id = new Guid("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"),
                             Capacity = 100,
                             Description = "A Friend wedding",
                             EventDate = new DateTimeOffset(new DateTime(2023, 4, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
@@ -159,7 +159,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("d173e20d-159e-4127-9ce9-b0ac2564ad97"),
+                            Id = new Guid("d173e20d-159e-4127-9ce9-b0ac2564ad97"),
                             Capacity = 50,
                             Description = "Friend birthday party",
                             EventDate = new DateTimeOffset(new DateTime(2023, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
@@ -168,7 +168,7 @@ namespace eventsApi.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("d8663e5e-7494-4f81-8739-6e0de1bea7ee"),
+                            Id = new Guid("d8663e5e-7494-4f81-8739-6e0de1bea7ee"),
                             Capacity = 150,
                             Description = "Farewell party for a friend",
                             EventDate = new DateTimeOffset(new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 3, 0, 0, 0)),
@@ -177,19 +177,33 @@ namespace eventsApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AttendeeEvent", b =>
+            modelBuilder.Entity("eventsApi.Models.AttendeeEvent", b =>
                 {
-                    b.HasOne("eventsApi.Models.Attendee", null)
-                        .WithMany()
-                        .HasForeignKey("AttendeesAttendeeId")
+                    b.HasOne("eventsApi.Models.Attendee", "Attendee")
+                        .WithMany("AttendeeEvents")
+                        .HasForeignKey("AttendeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eventsApi.Models.Event", null)
-                        .WithMany()
-                        .HasForeignKey("EventsEventId")
+                    b.HasOne("eventsApi.Models.Event", "Event")
+                        .WithMany("AttendeeEvents")
+                        .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Attendee");
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("eventsApi.Models.Attendee", b =>
+                {
+                    b.Navigation("AttendeeEvents");
+                });
+
+            modelBuilder.Entity("eventsApi.Models.Event", b =>
+                {
+                    b.Navigation("AttendeeEvents");
                 });
 #pragma warning restore 612, 618
         }

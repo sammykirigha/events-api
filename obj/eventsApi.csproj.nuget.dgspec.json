@@ -10,11 +10,11 @@
         "projectUniqueName": "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\eventsApi.csproj",
         "projectName": "eventsApi",
         "projectPath": "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\eventsApi.csproj",
-        "packagesPath": "C:\\Users\\dorci\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\SamuelKirigha\\.nuget\\packages\\",
         "outputPath": "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\dorci\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\SamuelKirigha\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -47,6 +47,18 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[7.0.5, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",

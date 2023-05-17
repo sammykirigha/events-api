@@ -76,3 +76,13 @@ D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\obj\Debug\net7.0\refint\ev
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\obj\Debug\net7.0\eventsApi.pdb
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\obj\Debug\net7.0\eventsApi.genruntimeconfig.cache
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\obj\Debug\net7.0\ref\eventsApi.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\eventsApi.staticwebassets.runtime.json
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.Extensions.Options.dll

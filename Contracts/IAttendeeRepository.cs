@@ -9,8 +9,7 @@ namespace eventsApi.Contracts
     public interface IAttendeeRepository : IRepositoryBase<Attendee>
     {
         Task<IEnumerable<Attendee>> GetAllAttendeesAsync();
-        Task<Attendee> GetAttendeeByIdAsync(int attendeeId);
-        // Task<Attendee> GetAttendeeWithDetailsAsync(int attendeeId);
+        Task<Attendee> GetAttendeeByIdAsync(Guid attendeeId);
         void CreateAttendee(Attendee attendee);
         void UpdateAttendee(Attendee attendee);
         void DeleteAttendee(Attendee attendee);

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using eventsApi.Dtos.eventsDto;
 using eventsApi.Models;
 
 namespace eventsApi.Dtos
 {
     public class AttendeeDto
     {
-        public Guid AttendeeId { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Please Provide a valid email")]
@@ -31,6 +32,6 @@ namespace eventsApi.Dtos
         public string? Speaker { get; set; }
 
         [Required(ErrorMessage = "list of events is required")]
-        public IList<Event>? events { get; set; }
+        public List<EventDto>? events { get; set; }
     }
 }

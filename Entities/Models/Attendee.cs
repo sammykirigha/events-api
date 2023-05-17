@@ -12,7 +12,7 @@ namespace eventsApi.Models
     public class Attendee
     {
         [Key]
-        public Guid AttendeeId { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Please Provide a valid email")]
@@ -33,8 +33,9 @@ namespace eventsApi.Models
         [Required(ErrorMessage = "Speaker is required")]
         public string? Speaker { get; set; }
 
-        [JsonIgnore]
-        public IList<Event>? Events { get; set; }
+        public List<Event> Events {get;} = new();
+        
+        public List<AttendeeEvent> AttendeeEvents { get; } = new();
 
     }
 }

@@ -32,7 +32,33 @@ namespace eventsApi.Controllers
             {
                 var attendees = await _repository.Attendee.GetAllAttendeesAsync();
                 var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
-                return Ok(attendeeResult);
+                var events = await _repository.Event.GetAllEventsAsync();
+                var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
+                var aelist = await _repository.AttendeeEvent.GetAllAttendeesEvents();
+                 Console.WriteLine($"the joining table {aelist.ToList()}");
+                var result = from a in attendees
+                             join ae in aelist on a.Id equals ae.AttendeeId
+                             join e in eventsResults on ae.EventId equals e.Id
+                             select new AttendeeDto 
+                             {
+                                Id = a.Id,
+                                Email = a.Email,
+                                Phone = a.Phone,
+                                FirstName = a.FirstName,
+                                LastName = a.LastName,
+                                Speaker = a.Speaker,
+                                events = new List<EventDto>() {
+                                    new EventDto(){
+                                        Id = e.Id,
+                                        EventName = e.EventName,
+                                        Location = e.Location,
+                                        EventDate = e.EventDate,
+                                        Description = e.Description,
+                                        Capacity = e.Capacity
+                                    }
+                                }
+                             };
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -41,7 +67,7 @@ namespace eventsApi.Controllers
         }
 
         [HttpGet("{id}", Name = "AttendeeById")]
-        public async Task<IActionResult> GetAttendeeById(int id)
+        public async Task<IActionResult> GetAttendeeById(Guid id)
         {
             try
             {
@@ -54,6 +80,7 @@ namespace eventsApi.Controllers
                 {
                     //map
                     var attendeeResult = _mapper.Map<AttendeeDto>(attendee);
+
                     return Ok(attendeeResult);
                 }
             }
@@ -92,6 +119,7 @@ namespace eventsApi.Controllers
         {
             try
             {
+
                 if (attendee == null)
                 {
                     return BadRequest("Attendee object is null");
@@ -101,22 +129,34 @@ namespace eventsApi.Controllers
                     return BadRequest("Invalid model object");
                 }
 
+                Console.WriteLine("Creating an attendee....");
+
                 var attendeeEntity = _mapper.Map<Attendee>(attendee);
                 _repository.Attendee.CreateAttendee(attendeeEntity);
                 await _repository.SaveAsync();
 
+                var evnt = await _repository.Event.GetEventByIdAsync(eventId);
+
+                var ae = new AttendeeEvent() 
+                {
+                    AttendeeId = attendeeEntity.Id, 
+                    EventId = evnt.Id
+                };
+
+                _repository.AttendeeEvent.CreateAttendeeEvent(ae);
+                await _repository.SaveAsync();
+                
                 var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
-                return CreatedAtRoute("AttendeeById", new { id = createdAttendee!.AttendeeId }, createdAttendee);
+                return CreatedAtRoute("AttendeeById", new { id = createdAttendee!.Id }, createdAttendee);
             }
             catch (Exception ex)
             {
-
-                return StatusCode(500, $"Internal server error ???, {ex.Message}");
+                return StatusCode(500, $"Internal server error ???, {ex.InnerException}");
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAttendee(int id, [FromBody] AttendeeForUpdateDto attendee)
+        public async Task<IActionResult> UpdateAttendee(Guid id, [FromBody] AttendeeForUpdateDto attendee)
         {
             try
             {
@@ -150,7 +190,7 @@ namespace eventsApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAttendee(int id)
+        public async Task<IActionResult> DeleteAttendee(Guid id)
         {
             try
             {
