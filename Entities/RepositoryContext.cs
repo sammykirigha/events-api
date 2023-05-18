@@ -104,6 +104,8 @@ namespace eventsApi.Entities
                 r => r.HasOne<Attendee>(e => e.Attendee).WithMany(e => e.AttendeeEvents)
             );
 
+            modelBuilder.Entity<Attendee>().HasIndex(a => a.Email).IsUnique();
+
             // modelBuilder.Entity<AttendeeEvent>().HasOne(ae => ae.Attendee).WithMany(a => a.AttendeeEvents).HasForeignKey(ae => ae.AttendeeId);
             // modelBuilder.Entity<AttendeeEvent>().HasOne(ae => ae.Event).WithMany(e => e.AttendeeEvents).HasForeignKey(ae => ae.EventId);
 

@@ -12,8 +12,8 @@ using eventsApi.Entities;
 namespace eventsApi.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230517092530_secondMigrations")]
-    partial class secondMigrations
+    [Migration("20230518065522_InitialMigrations")]
+    partial class InitialMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace eventsApi.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -55,6 +55,9 @@ namespace eventsApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Attendees");
 

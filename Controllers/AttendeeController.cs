@@ -35,19 +35,19 @@ namespace eventsApi.Controllers
                 var events = await _repository.Event.GetAllEventsAsync();
                 var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
                 var aelist = await _repository.AttendeeEvent.GetAllAttendeesEvents();
-                 Console.WriteLine($"the joining table {aelist.ToList()}");
-                var result = from a in attendees
+                Console.WriteLine($"the joining table {aelist.ToList()}");
+                var result = from a in attendeeResult
                              join ae in aelist on a.Id equals ae.AttendeeId
                              join e in eventsResults on ae.EventId equals e.Id
-                             select new AttendeeDto 
+                             select new AttendeeDto
                              {
-                                Id = a.Id,
-                                Email = a.Email,
-                                Phone = a.Phone,
-                                FirstName = a.FirstName,
-                                LastName = a.LastName,
-                                Speaker = a.Speaker,
-                                events = new List<EventDto>() {
+                                 Id = a.Id,
+                                 Email = a.Email,
+                                 Phone = a.Phone,
+                                 FirstName = a.FirstName,
+                                 LastName = a.LastName,
+                                 Speaker = a.Speaker,
+                                 events = new List<EventDto>() {
                                     new EventDto(){
                                         Id = e.Id,
                                         EventName = e.EventName,
@@ -91,6 +91,18 @@ namespace eventsApi.Controllers
             }
         }
 
+        [HttpGet("email/{email}", Name = "AttendeeEmail")]
+        public async Task<IActionResult> GetAttendeeByEMail(string email)
+        {
+            var result = await _repository.Attendee.GetAttendeeByEmailAsync(email);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         // [HttpGet("{id}/events")]
         // public async Task<IActionResult> GetAttendeesWithDetails(int id)
         // {
@@ -119,7 +131,6 @@ namespace eventsApi.Controllers
         {
             try
             {
-
                 if (attendee == null)
                 {
                     return BadRequest("Attendee object is null");
@@ -129,25 +140,40 @@ namespace eventsApi.Controllers
                     return BadRequest("Invalid model object");
                 }
 
-                Console.WriteLine("Creating an attendee....");
-
+                var existingAttendee = await _repository.Attendee.GetAttendeeByEmailAsync(attendee.Email);
                 var attendeeEntity = _mapper.Map<Attendee>(attendee);
-                _repository.Attendee.CreateAttendee(attendeeEntity);
-                await _repository.SaveAsync();
 
-                var evnt = await _repository.Event.GetEventByIdAsync(eventId);
-
-                var ae = new AttendeeEvent() 
+                if (existingAttendee != null)
                 {
-                    AttendeeId = attendeeEntity.Id, 
-                    EventId = evnt.Id
-                };
+                    var ae = new AttendeeEvent()
+                    {
+                        AttendeeId = existingAttendee.Id,
+                        EventId = eventId
+                    };
 
-                _repository.AttendeeEvent.CreateAttendeeEvent(ae);
-                await _repository.SaveAsync();
+                    _repository.AttendeeEvent.CreateAttendeeEvent(ae);
+                    await _repository.SaveAsync();
+
+                    return Ok("Event Added to your list");
+                }
+                else
+                {
+                    _repository.Attendee.CreateAttendee(attendeeEntity);
+                    await _repository.SaveAsync();
+
+                    var attendeeEventData = new AttendeeEvent()
+                    {
+                        AttendeeId = attendeeEntity.Id,
+                        EventId = eventId
+                    };
+
+                    _repository.AttendeeEvent.CreateAttendeeEvent(attendeeEventData);
+                    await _repository.SaveAsync();
+
+                    var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
+                    return CreatedAtRoute("AttendeeById", new { id = createdAttendee!.Id }, createdAttendee);
+                }
                 
-                var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
-                return CreatedAtRoute("AttendeeById", new { id = createdAttendee!.Id }, createdAttendee);
             }
             catch (Exception ex)
             {

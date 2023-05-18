@@ -25,6 +25,11 @@ namespace eventsApi.Repository
             var result = await FindByCondition(attendee => attendee.Id.Equals(id)).FirstOrDefaultAsync();
             return result!;
         }
+        public async Task<Attendee> GetAttendeeByEmailAsync(string email)
+        {
+            var result = await FindByCondition(attendee => attendee.Email.Equals(email)).FirstOrDefaultAsync();
+            return result!;
+        }
 
 
         public void CreateAttendee(Attendee attendee)

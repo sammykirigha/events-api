@@ -14,7 +14,7 @@ namespace eventsApi.Dtos
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Please Provide a valid email")]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Phone is required")]
         [StringLength(12, ErrorMessage = "Phone can't be longer than 12 characters")]

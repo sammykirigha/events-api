@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eventsApi.Migrations
 {
     /// <inheritdoc />
-    public partial class secondMigrations : Migration
+    public partial class InitialMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace eventsApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
@@ -95,6 +95,12 @@ namespace eventsApi.Migrations
                 name: "IX_AttendeeEvents_EventId",
                 table: "AttendeeEvents",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendees_Email",
+                table: "Attendees",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
