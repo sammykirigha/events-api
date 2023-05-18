@@ -12,7 +12,6 @@ namespace eventsApi.Repository
         private RepositoryContext _repoContext;
         private IEventRepository _event;
         private IAttendeeRepository _attendee;
-
         private IAttendeeEventRepository _attendeeevent;
 
         public IEventRepository Event
@@ -26,7 +25,6 @@ namespace eventsApi.Repository
                 return _event;
             }
         }
-
         public IAttendeeRepository Attendee
         {
             get
