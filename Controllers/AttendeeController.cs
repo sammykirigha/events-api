@@ -16,13 +16,12 @@ namespace eventsApi.Controllers
     public class AttendeeController : ControllerBase
     {
         private IRepositoryWrapper _repository;
-
         private readonly IMapper _mapper;
 
         public AttendeeController(IRepositoryWrapper repository, IMapper mapper)
         {
-            _repository = repository;
-            _mapper = mapper;
+            _repository = repository ?? throw new ArgumentException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
         }
 
         [HttpGet]
@@ -32,9 +31,6 @@ namespace eventsApi.Controllers
             {
                 var attendees = await _repository.Attendee.GetAllAttendeesAsync();
                 var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
-                var events = await _repository.Event.GetAllEventsAsync();
-                var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
-                var aelist = await _repository.AttendeeEvent.GetAllAttendeesEvents();
                 return Ok(attendeeResult);
             }
             catch (Exception ex)

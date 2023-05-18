@@ -22,7 +22,7 @@ namespace eventsApi.Entities
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Event>().HasData(
-                       new Event
+                new Event
                        {
                            Id = Guid.Parse("5b1c2b4d-48c7-402a-80c3-cc796ad49c6b"),
                            EventName = "Wedding",
@@ -31,7 +31,7 @@ namespace eventsApi.Entities
                            Location = "Nyeri",
                            Capacity = 100
                        },
-                       new Event
+                new Event
                        {
                            Id = Guid.Parse("d173e20d-159e-4127-9ce9-b0ac2564ad97"),
                            EventName = "Birthday",
@@ -40,7 +40,7 @@ namespace eventsApi.Entities
                            Location = "Nairobi",
                            Capacity = 50
                        },
-                       new Event
+                new Event
                        {
                            Id = Guid.Parse("d8663e5e-7494-4f81-8739-6e0de1bea7ee"),
                            EventName = "Farewell",
@@ -103,17 +103,7 @@ namespace eventsApi.Entities
                 l => l.HasOne<Event>(e => e.Event).WithMany(e => e.AttendeeEvents),
                 r => r.HasOne<Attendee>(e => e.Attendee).WithMany(e => e.AttendeeEvents)
             );
-
             modelBuilder.Entity<Attendee>().HasIndex(a => a.Email).IsUnique();
-
-            // modelBuilder.Entity<AttendeeEvent>().HasOne(ae => ae.Attendee).WithMany(a => a.AttendeeEvents).HasForeignKey(ae => ae.AttendeeId);
-            // modelBuilder.Entity<AttendeeEvent>().HasOne(ae => ae.Event).WithMany(e => e.AttendeeEvents).HasForeignKey(ae => ae.EventId);
-
-
-
         }
-
-
-
     }
 }
