@@ -35,30 +35,7 @@ namespace eventsApi.Controllers
                 var events = await _repository.Event.GetAllEventsAsync();
                 var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
                 var aelist = await _repository.AttendeeEvent.GetAllAttendeesEvents();
-                Console.WriteLine($"the joining table {aelist.ToList()}");
-                var result = from a in attendeeResult
-                             join ae in aelist on a.Id equals ae.AttendeeId
-                             join e in eventsResults on ae.EventId equals e.Id
-                             select new AttendeeDto
-                             {
-                                 Id = a.Id,
-                                 Email = a.Email,
-                                 Phone = a.Phone,
-                                 FirstName = a.FirstName,
-                                 LastName = a.LastName,
-                                 Speaker = a.Speaker,
-                                 events = new List<EventDto>() {
-                                    new EventDto(){
-                                        Id = e.Id,
-                                        EventName = e.EventName,
-                                        Location = e.Location,
-                                        EventDate = e.EventDate,
-                                        Description = e.Description,
-                                        Capacity = e.Capacity
-                                    }
-                                }
-                             };
-                return Ok(result);
+                return Ok(attendeeResult);
             }
             catch (Exception ex)
             {
@@ -89,18 +66,6 @@ namespace eventsApi.Controllers
 
                 return StatusCode(500, $"Internal server error, {ex.Message}");
             }
-        }
-
-        [HttpGet("email/{email}", Name = "AttendeeEmail")]
-        public async Task<IActionResult> GetAttendeeByEMail(string email)
-        {
-            var result = await _repository.Attendee.GetAttendeeByEmailAsync(email);
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(result);
         }
 
         // [HttpGet("{id}/events")]

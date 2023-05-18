@@ -86,3 +86,7 @@ D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Newtonsoft.Json.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll

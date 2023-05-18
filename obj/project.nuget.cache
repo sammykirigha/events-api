@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BpLtZG+nkq9rLSc2latpLesTArxLSpenetUIJIya2WDenWrhr4qWn2ldDNs1t2kpZJ3TKy2QITRicK1ofhvG+w==",
+  "dgSpecHash": "4W1ScVNUpBGm0SFDJw45ahwVQTYTr8kcikwQq0LYS4Ir2QeVNGUBFy+sPfTiOFT9qidSEFK+Q0ac5w7raUT7gg==",
   "success": true,
   "projectFilePath": "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\eventsApi.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,8 @@
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.5\\microsoft.aspnetcore.cryptography.keyderivation.7.0.5.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\7.0.5\\microsoft.aspnetcore.identity.entityframeworkcore.7.0.5.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\7.0.5\\microsoft.aspnetcore.identity.ui.7.0.5.nupkg.sha512",
+    "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\7.0.5\\microsoft.aspnetcore.jsonpatch.7.0.5.nupkg.sha512",
+    "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\7.0.5\\microsoft.aspnetcore.mvc.newtonsoftjson.7.0.5.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
@@ -56,6 +58,8 @@
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\SamuelKirigha\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\SamuelKirigha\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

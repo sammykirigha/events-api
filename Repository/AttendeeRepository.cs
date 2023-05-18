@@ -16,7 +16,7 @@ namespace eventsApi.Repository
 
         public async Task<IEnumerable<Attendee>> GetAllAttendeesAsync()
         {
-            var results = await FindAll().OrderBy(att => att.Id).ToListAsync();
+            var results = await FindAll().Include(a => a.Events).OrderBy(att => att.Id).ToListAsync();
             return results;
         }
 

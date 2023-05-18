@@ -32,6 +32,7 @@ namespace eventsApi.Dtos
         public string? Speaker { get; set; }
 
         [Required(ErrorMessage = "list of events is required")]
+        
         public List<EventDto>? events { get; set; }
     }
 }
