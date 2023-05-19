@@ -63,7 +63,7 @@ namespace eventsApi.Controllers
         }
 
         [HttpGet("{id}/events")]
-        public async Task<IActionResult> GetAttendeesWithDetails(Guid id)
+        public async Task<IActionResult> GetAllEventsForAttendee(Guid id)
         {
             try
             {
@@ -86,6 +86,41 @@ namespace eventsApi.Controllers
                             ).ToList();
 
                     return Ok(list);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("{id}/events/{eventId}")]
+        public async Task<IActionResult> GetSingleEventForAttendee(Guid id, Guid eventId)
+        {
+            try
+            {
+                var events = _mapper.Map<IEnumerable<EventDto>>(await _repository.Event.GetAllEventsAsync());
+                var attendees = _mapper.Map<IEnumerable<AttendeeDto>>(await _repository.Attendee.GetAllAttendeesAsync());
+                var attendeeEvents = await _repository.AttendeeEvent.GetAllAttendeesEvents();
+                if (events == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    List<EventDto> list = new();
+
+                    list = (
+                           from attendee in attendees.Where(a => a.Id == id)
+                           join attndevent in attendeeEvents on attendee.Id equals attndevent.AttendeeId
+                           join evnt in events on attndevent.EventId equals evnt.Id
+                           select evnt
+                            ).ToList();
+
+                    var eventForAttendee = list.Where(e => e.Id == eventId);
+
+                    return Ok(eventForAttendee);
                 }
 
             }
