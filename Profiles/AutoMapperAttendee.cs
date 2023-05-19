@@ -14,7 +14,7 @@ namespace eventsApi.Handlers
         public AutoMapperAttendee()
         {
             CreateMap<Attendee, AttendeeForCreationDto>().ReverseMap();
-            CreateMap<Attendee, AttendeeDto>().ReverseMap();
+            CreateMap<Attendee, AttendeeDto>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
             CreateMap<Event, EventDto>().ReverseMap();
             CreateMap<Event, EventToCreateDto>().ReverseMap();
             CreateMap<Event, CreatedEventDto>().ReverseMap();

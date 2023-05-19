@@ -11,27 +11,13 @@ namespace eventsApi.Dtos
     public class AttendeeDto
     {
         public Guid Id { get; set; }
+        public string Email { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Please Provide a valid email")]
-        public string? Email { get; set; }
+        public string Phone { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Phone is required")]
-        [StringLength(12, ErrorMessage = "Phone can't be longer than 12 characters")]
-        public string? Phone { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "FirstName is required")]
-        [StringLength(60, ErrorMessage = "FirstName can't be longer than 60 characters")]
-        public string? FirstName { get; set; }
-
-        [Required(ErrorMessage = "LastName is required")]
-        [StringLength(60, ErrorMessage = "LastName can't be longer than 60 characters")]
-        public string? LastName { get; set; }
-
-        [Required(ErrorMessage = "Speaker is required")]
-        public string? Speaker { get; set; }
-
-        [Required(ErrorMessage = "list of events is required")]
+        public string Speaker { get; set; } = string.Empty;
         
         public List<EventDto>? events { get; set; }
     }

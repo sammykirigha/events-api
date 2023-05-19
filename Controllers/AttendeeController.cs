@@ -51,9 +51,7 @@ namespace eventsApi.Controllers
                 }
                 else
                 {
-                    //map
                     var attendeeResult = _mapper.Map<AttendeeDto>(attendee);
-
                     return Ok(attendeeResult);
                 }
             }
@@ -64,28 +62,39 @@ namespace eventsApi.Controllers
             }
         }
 
-        // [HttpGet("{id}/events")]
-        // public async Task<IActionResult> GetAttendeesWithDetails(int id)
-        // {
-        //     try
-        //     {
-        //         var attendee = await _repository.Attendee.GetAttendeeWithDetailsAsync(id);
-        //         if (attendee == null)
-        //         {
-        //             return NotFound();
-        //         }
-        //         else
-        //         {
-        //             //map
-        //             return Ok(attendee);
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
+        [HttpGet("{id}/events")]
+        public async Task<IActionResult> GetAttendeesWithDetails(Guid id)
+        {
+            try
+            {
+                var events = _mapper.Map<IEnumerable<EventDto>>(await _repository.Event.GetAllEventsAsync());
+                var attendees = _mapper.Map<IEnumerable<AttendeeDto>>(await _repository.Attendee.GetAllAttendeesAsync());
+                var attendeeEvents = await _repository.AttendeeEvent.GetAllAttendeesEvents();
+                if (events == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    List<EventDto> list = new();
 
-        //         return StatusCode(500, "Internal server error");
-        //     }
-        // }
+                    list = (
+                           from attendee in attendees.Where(a => a.Id == id)
+                           join attndevent in attendeeEvents on attendee.Id equals attndevent.AttendeeId
+                           join evnt in events on attndevent.EventId equals evnt.Id
+                           select evnt
+                            ).ToList();
+
+                    return Ok(list);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateAttendee([FromBody] AttendeeForCreationDto attendee, [FromQuery] Guid eventId)
@@ -134,7 +143,7 @@ namespace eventsApi.Controllers
                     var createdAttendee = _mapper.Map<AttendeeDto>(attendeeEntity);
                     return CreatedAtRoute("AttendeeById", new { id = createdAttendee!.Id }, createdAttendee);
                 }
-                
+
             }
             catch (Exception ex)
             {
