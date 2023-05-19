@@ -31,5 +31,17 @@ namespace eventsApi.Repository
             eventToCreate.Id = Guid.NewGuid();
             Create(eventToCreate);
         }
+
+        public async Task<IEnumerable<Event>> GetAllEventsAsync(IEnumerable<Guid> eventIds)
+        {
+            if(eventIds == null)
+            {
+                throw new ArgumentNullException(nameof(eventIds));
+            }
+
+            //   .FirstOrDefaultAsync(e => eventIds.Contains(e.Id))
+            var results =  await FindAll().Where(e => eventIds.Contains(e.Id)).ToListAsync();
+            return results;
+        }
     }
 }
