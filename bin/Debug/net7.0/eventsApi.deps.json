@@ -10,6 +10,7 @@
         "dependencies": {
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.0",
+          "LINQtoCSV": "1.5.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.5",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.5",
           "Microsoft.AspNetCore.Identity.UI": "7.0.5",
@@ -86,6 +87,14 @@
           "lib/net6.0/Humanizer.dll": {
             "assemblyVersion": "2.14.0.0",
             "fileVersion": "2.14.1.48190"
+          }
+        }
+      },
+      "LINQtoCSV/1.5.0": {
+        "runtime": {
+          "lib/net35/LINQtoCSV.dll": {
+            "assemblyVersion": "1.5.0.0",
+            "fileVersion": "1.5.0.0"
           }
         }
       },
@@ -890,6 +899,13 @@
       "sha512": "sha512-lQKvtaTDOXnoVJ20ibTuSIOf2i0uO0MPbDhd1jm238I+U/2ZnRENj0cktKZhtchBMtCUSRQ5v4xBCUbKNmyVMw==",
       "path": "humanizer.core/2.14.1",
       "hashPath": "humanizer.core.2.14.1.nupkg.sha512"
+    },
+    "LINQtoCSV/1.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R3FWKGV326oWhEIJFgBQvJyeEs7ylViAMjTYs1YetwVdGfbDGf465xfLaxUxePwF/8Tcajt/1Llj3exhYL2xhQ==",
+      "path": "linqtocsv/1.5.0",
+      "hashPath": "linqtocsv.1.5.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication.JwtBearer/7.0.5": {
       "type": "package",

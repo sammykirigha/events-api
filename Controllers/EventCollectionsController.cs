@@ -66,6 +66,26 @@ namespace eventsApi.Controllers
             return CreatedAtRoute("GeteventsCollection", new {eventIds = eventIdsAsString}, eventCollectionToReturn);
         }
 
+        [HttpPost("fromcsv")]
+        public async Task<ActionResult<IEnumerable<EventDtoCsv>>> CreateEventsCollectionFromCsvFile()
+        {
+
+            var myEvents = ReadCsvFile.ReadCsvFromFile();
+            var eventEntities = _mapper.Map<IEnumerable<Event>>(myEvents);
+
+            foreach (var evnt in eventEntities)
+            {
+                _repository.Event.CreateEvent(evnt);
+            }
+            await _repository.SaveAsync();
+
+            var eventCollectionToReturn = _mapper.Map<IEnumerable<EventDtoCsv>>(eventEntities);
+
+            var eventIdsAsString = string.Join(",", eventCollectionToReturn.Select(e => e.Id));
+
+            return CreatedAtRoute("GeteventsCollection", new {eventIds = eventIdsAsString}, eventCollectionToReturn);
+        }
+
 
     }
 }

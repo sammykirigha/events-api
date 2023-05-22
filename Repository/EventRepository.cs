@@ -43,5 +43,30 @@ namespace eventsApi.Repository
             var results =  await FindAll().Where(e => eventIds.Contains(e.Id)).ToListAsync();
             return results;
         }
+
+        public async Task<IEnumerable<Event>> GetAllEventsAsync(string eventName, string searchQuery)
+        {
+            if(string.IsNullOrWhiteSpace(eventName) && string.IsNullOrWhiteSpace(searchQuery))
+            {
+                return await GetAllEventsAsync();
+            }
+            var collection =  FindAll() as IQueryable<Event>;
+
+            if(!string.IsNullOrWhiteSpace(eventName))
+            {
+            eventName = eventName.Trim();
+            collection = collection.Where(e => e.EventName == eventName);
+            }
+
+            if(!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.Trim();
+                collection = collection.Where(e => e.EventName!.Contains(searchQuery) 
+                || e.Description!.Contains(searchQuery) 
+                || e.Location!.Contains(searchQuery));
+            }
+           
+            return await collection.ToListAsync();
+        }
     }
 }

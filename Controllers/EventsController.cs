@@ -26,11 +26,11 @@ namespace eventsApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllEvents()
+        public async Task<IActionResult> GetAllEvents(string? eventName = "", string? searchQuery = "")
         {
             try
             {
-                var events = await _repository.Event.GetAllEventsAsync();
+                var events = await _repository.Event.GetAllEventsAsync(eventName, searchQuery);
                 var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
                 return Ok(eventsResults);
             }

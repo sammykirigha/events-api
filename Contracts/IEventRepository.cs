@@ -9,6 +9,7 @@ namespace eventsApi.Contracts
     public interface IEventRepository : IRepositoryBase<Event>
     {
         Task<IEnumerable<Event>> GetAllEventsAsync();
+        Task<IEnumerable<Event>> GetAllEventsAsync(string eventName, string searchQuery);
 
         Task<IEnumerable<Event>> GetAllEventsAsync(IEnumerable<Guid> eventIds);
 
