@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using eventsApi.Contracts;
 using eventsApi.Dtos.eventsDto;
+using eventsApi.Helpers;
 using eventsApi.Models;
+using eventsApi.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -25,18 +28,68 @@ namespace eventsApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllEvents(string? eventName = "", string? searchQuery = "")
+        [HttpGet(Name = "GetEvents")]
+        public async Task<IActionResult> GetAllEvents([FromQuery] EventsResourceParameters eventsResourceParameters)
         {
             try
             {
-                var events = await _repository.Event.GetAllEventsAsync(eventName, searchQuery);
+                var events = await _repository.Event.GetAllEventsAsync(eventsResourceParameters);
+
+                var previousPageLink = events.HasPrevious ? CreateResourceUri(eventsResourceParameters, ResourceUriType.NextPage) : null;
+                var nextPageLink = events.HasNext ? CreateResourceUri(eventsResourceParameters, ResourceUriType.PreviousPage) : null;
+                var paginationMetadata = new
+                {
+                   totalCount = events.TotalCount,
+                   pageSize = events.PageSize,
+                   currentPage = events.CurrentPage,
+                   totalPages = events.TotalPages,
+                   previousPageLink = previousPageLink,
+                   nextPageLink = nextPageLink
+                };
+
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
                 var eventsResults = _mapper.Map<IEnumerable<EventDto>>(events);
                 return Ok(eventsResults);
             }
             catch (System.Exception)
             {
                 throw;
+            }
+        }
+
+        private string? CreateResourceUri(
+            EventsResourceParameters eventsResourceParameters,
+            ResourceUriType type)
+        {
+            switch (type)
+            {
+                case ResourceUriType.PreviousPage:
+                    return Url.Link("GetEvents",
+                    new
+                    {
+                        pageNumber = eventsResourceParameters.PageNumber - 1,
+                        pageSize = eventsResourceParameters.PageSize,
+                        eventName = eventsResourceParameters.EventName,
+                        searchQuery = eventsResourceParameters.SearchQuery
+                    });
+                case ResourceUriType.NextPage:
+                    return Url.Link("GetEvents",
+                   new
+                   {
+                       pageNumber = eventsResourceParameters.PageNumber + 1,
+                       pageSize = eventsResourceParameters.PageSize,
+                       eventName = eventsResourceParameters.EventName,
+                       searchQuery = eventsResourceParameters.SearchQuery
+                   });
+                default:
+                    return Url.Link("GetEvents",
+                 new
+                 {
+                     pageNumber = eventsResourceParameters.PageNumber,
+                     pageSize = eventsResourceParameters.PageSize,
+                     eventName = eventsResourceParameters.EventName,
+                     searchQuery = eventsResourceParameters.SearchQuery
+                 });
             }
         }
 

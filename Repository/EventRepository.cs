@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using eventsApi.Contracts;
 using eventsApi.Entities;
+using eventsApi.Helpers;
 using eventsApi.Models;
+using eventsApi.ResourceParameters;
 using Microsoft.EntityFrameworkCore;
 
 namespace eventsApi.Repository
@@ -34,39 +36,43 @@ namespace eventsApi.Repository
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync(IEnumerable<Guid> eventIds)
         {
-            if(eventIds == null)
+            if (eventIds == null)
             {
                 throw new ArgumentNullException(nameof(eventIds));
             }
 
             //   .FirstOrDefaultAsync(e => eventIds.Contains(e.Id))
-            var results =  await FindAll().Where(e => eventIds.Contains(e.Id)).ToListAsync();
+            var results = await FindAll().Where(e => eventIds.Contains(e.Id)).ToListAsync();
             return results;
         }
 
-        public async Task<IEnumerable<Event>> GetAllEventsAsync(string eventName, string searchQuery)
+        public async Task<PageList<Event>> GetAllEventsAsync(EventsResourceParameters eventsResourceParameters)
         {
-            if(string.IsNullOrWhiteSpace(eventName) && string.IsNullOrWhiteSpace(searchQuery))
-            {
-                return await GetAllEventsAsync();
-            }
-            var collection =  FindAll() as IQueryable<Event>;
 
-            if(!string.IsNullOrWhiteSpace(eventName))
+            if (eventsResourceParameters == null)
             {
-            eventName = eventName.Trim();
-            collection = collection.Where(e => e.EventName == eventName);
+                throw new ArgumentNullException(nameof(eventsResourceParameters));
             }
 
-            if(!string.IsNullOrWhiteSpace(searchQuery))
+            var collection = FindAll() as IQueryable<Event>;
+
+            if (!string.IsNullOrWhiteSpace(eventsResourceParameters.EventName))
             {
-                searchQuery = searchQuery.Trim();
-                collection = collection.Where(e => e.EventName!.Contains(searchQuery) 
-                || e.Description!.Contains(searchQuery) 
+                var eventName = eventsResourceParameters.EventName.Trim();
+                collection = collection.Where(e => e.EventName == eventName);
+            }
+
+            if (!string.IsNullOrWhiteSpace(eventsResourceParameters.SearchQuery))
+            {
+                var searchQuery = eventsResourceParameters.SearchQuery.Trim();
+                collection = collection.Where(e => e.EventName!.Contains(searchQuery)
+                || e.Description!.Contains(searchQuery)
                 || e.Location!.Contains(searchQuery));
             }
-           
-            return await collection.ToListAsync();
+
+            return await PageList<Event>.CreateAsync(collection,
+            eventsResourceParameters.PageNumber,
+            eventsResourceParameters.PageSize);
         }
     }
 }
