@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "n+ylrSaNVLoazl6ND6adCTQlO/C9ex9Pwe347e0cLFPEPSOFbD6mSSoWx4cvfEMtLvc7MVecKj5RgS5azBD/Hg==",
+  "dgSpecHash": "XxWd8ewLEbzQ1APhEr8NE0aoggOp3+hN+pBR6LArdi/yRNiPkILurJl6H2M6HP1FPyC6Oz8Ha17mRatTJpeV4g==",
   "success": true,
   "projectFilePath": "D:\\PROJECTS\\WORK-PROJECTS\\DOTNET\\events\\api\\eventsApi\\eventsApi.csproj",
   "expectedPackageFiles": [
@@ -74,6 +74,7 @@
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.21.0\\system.identitymodel.tokens.jwt.6.21.0.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
+    "C:\\Users\\SamuelKirigha\\.nuget\\packages\\system.linq.dynamic.core\\1.3.2\\system.linq.dynamic.core.1.3.2.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\system.memory.data\\1.0.2\\system.memory.data.1.0.2.nupkg.sha512",
     "C:\\Users\\SamuelKirigha\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eventsApi.Contracts;
+using eventsApi.Dtos.eventsDto;
 using eventsApi.Entities;
 using eventsApi.Helpers;
 using eventsApi.Models;
@@ -13,8 +14,11 @@ namespace eventsApi.Repository
 {
     public class EventRepository : RepositoryBase<Event>, IEventRepository
     {
-        public EventRepository(RepositoryContext repositoryContext) : base(repositoryContext)
-        { }
+        private readonly PropertyMappingService _propertyMappingService;
+        public EventRepository(RepositoryContext repositoryContext, PropertyMappingService propertyMappingService) : base(repositoryContext)
+        {
+            _propertyMappingService = propertyMappingService ?? throw new ArgumentNullException(nameof(propertyMappingService));
+         }
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync()
         {
@@ -68,6 +72,13 @@ namespace eventsApi.Repository
                 collection = collection.Where(e => e.EventName!.Contains(searchQuery)
                 || e.Description!.Contains(searchQuery)
                 || e.Location!.Contains(searchQuery));
+            }
+
+            if(!string.IsNullOrWhiteSpace(eventsResourceParameters.OrderBy))
+            {
+                var eventPropertyMappingDictionary = _propertyMappingService.GetPropertyMapping<EventDto, Event>();
+
+                collection = collection.ApplySort( eventsResourceParameters.OrderBy ,eventPropertyMappingDictionary);
             }
 
             return await PageList<Event>.CreateAsync(collection,

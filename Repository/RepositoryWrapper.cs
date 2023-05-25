@@ -10,6 +10,7 @@ namespace eventsApi.Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private RepositoryContext _repoContext;
+        private PropertyMappingService _prpertyMappingService;
         private IEventRepository _event;
         private IAttendeeRepository _attendee;
         private IAttendeeEventRepository _attendeeevent;
@@ -20,7 +21,7 @@ namespace eventsApi.Repository
             {
                 if (_event == null)
                 {
-                    _event = new EventRepository(_repoContext);
+                    _event = new EventRepository(_repoContext, _prpertyMappingService);
                 }
                 return _event;
             }

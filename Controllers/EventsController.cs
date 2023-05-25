@@ -35,8 +35,8 @@ namespace eventsApi.Controllers
             {
                 var events = await _repository.Event.GetAllEventsAsync(eventsResourceParameters);
 
-                var previousPageLink = events.HasPrevious ? CreateResourceUri(eventsResourceParameters, ResourceUriType.NextPage) : null;
-                var nextPageLink = events.HasNext ? CreateResourceUri(eventsResourceParameters, ResourceUriType.PreviousPage) : null;
+                var previousPageLink = events.HasPrevious ? CreateResourceUri(eventsResourceParameters, ResourceUriType.PreviousPage) : null;
+                var nextPageLink = events.HasNext ? CreateResourceUri(eventsResourceParameters, ResourceUriType.NextPage) : null;
                 var paginationMetadata = new
                 {
                    totalCount = events.TotalCount,
@@ -63,7 +63,7 @@ namespace eventsApi.Controllers
         {
             switch (type)
             {
-                case ResourceUriType.PreviousPage:
+                case ResourceUriType.PreviousPage: 
                     return Url.Link("GetEvents",
                     new
                     {
