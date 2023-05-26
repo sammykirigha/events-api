@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using eventsApi.Contracts;
 using eventsApi.Dtos;
 using eventsApi.Dtos.eventsDto;
+using eventsApi.Helpers;
 using eventsApi.Models;
+using eventsApi.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eventsApi.Controllers
@@ -24,18 +27,70 @@ namespace eventsApi.Controllers
             _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllAttendees()
+        [HttpGet(Name = "GetAttendees")]
+        public async Task<IActionResult> GetAllAttendees([FromQuery] AttendeesResourceParameters attendeesResourceParameters)
         {
             try
             {
-                var attendees = await _repository.Attendee.GetAllAttendeesAsync();
+                var attendees = await _repository.Attendee.GetAllAttendeesAsync(attendeesResourceParameters);
+
+                   var previousPageLink = attendees.HasPrevious ? CreateResourceUri(attendeesResourceParameters, ResourceUriType.PreviousPage) : null;
+                var nextPageLink = attendees.HasNext ? CreateResourceUri(attendeesResourceParameters, ResourceUriType.NextPage) : null;
+                var paginationMetadata = new
+                {
+                   totalCount = attendees.TotalCount,
+                   pageSize = attendees.PageSize,
+                   currentPage = attendees.CurrentPage,
+                   totalPages = attendees.TotalPages,
+                   previousPageLink = previousPageLink,
+                   nextPageLink = nextPageLink
+                };
+
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
+
+
                 var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
                 return Ok(attendeeResult);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        private string? CreateResourceUri(
+            AttendeesResourceParameters attendeesResourceParameters,
+            ResourceUriType type)
+        {
+            switch (type)
+            {
+                case ResourceUriType.PreviousPage: 
+                    return Url.Link("GetAttendees",
+                    new
+                    {
+                        pageNumber = attendeesResourceParameters.PageNumber - 1,
+                        pageSize = attendeesResourceParameters.PageSize,
+                        attendeeName = attendeesResourceParameters.AttendeeName,
+                        searchQuery = attendeesResourceParameters.SearchQuery
+                    });
+                case ResourceUriType.NextPage:
+                    return Url.Link("GetAttendees",
+                   new
+                   {
+                       pageNumber = attendeesResourceParameters.PageNumber + 1,
+                       pageSize = attendeesResourceParameters.PageSize,
+                       attendeeName = attendeesResourceParameters.AttendeeName,
+                       searchQuery = attendeesResourceParameters.SearchQuery
+                   });
+                default:
+                    return Url.Link("GetAttendees",
+                 new
+                 {
+                     pageNumber = attendeesResourceParameters.PageNumber,
+                     pageSize = attendeesResourceParameters.PageSize,
+                     attendeeName = attendeesResourceParameters.AttendeeName,
+                     searchQuery = attendeesResourceParameters.SearchQuery
+                 });
             }
         }
 

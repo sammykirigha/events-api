@@ -14,7 +14,7 @@ namespace eventsApi.Repository
 {
     public class EventRepository : RepositoryBase<Event>, IEventRepository
     {
-        private readonly PropertyMappingService _propertyMappingService;
+        private readonly IPropertyMappingService _propertyMappingService;
         public EventRepository(RepositoryContext repositoryContext, PropertyMappingService propertyMappingService) : base(repositoryContext)
         {
             _propertyMappingService = propertyMappingService ?? throw new ArgumentNullException(nameof(propertyMappingService));

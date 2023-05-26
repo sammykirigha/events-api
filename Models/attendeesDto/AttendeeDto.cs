@@ -17,6 +17,8 @@ namespace eventsApi.Dtos
 
         public string Name { get; set; } = string.Empty;
 
+        public int Age { get; set; }
+
         public string Speaker { get; set; } = string.Empty;
         
         public List<EventDto>? events { get; set; }

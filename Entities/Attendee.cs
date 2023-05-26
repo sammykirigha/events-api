@@ -30,6 +30,9 @@ namespace eventsApi.Models
         [StringLength(60, ErrorMessage = "LastName can't be longer than 60 characters")]
         public string LastName { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "DateOfBirth is required")]
+        public DateTimeOffset DateOfBirth { get; set; }
+
         [Required(ErrorMessage = "Speaker is required")]
         public string? Speaker { get; set; }
 

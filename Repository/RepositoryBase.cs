@@ -12,6 +12,7 @@ namespace eventsApi.Repository
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         private RepositoryContext _repositoryContext { get; set; }
+
         public RepositoryBase(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;

@@ -91,3 +91,4 @@ D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\obj\Debug\net7.0\eventsApi
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\obj\Debug\net7.0\eventsApi.genruntimeconfig.cache
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\obj\Debug\net7.0\ref\eventsApi.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\LINQtoCSV.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\System.Linq.Dynamic.Core.dll

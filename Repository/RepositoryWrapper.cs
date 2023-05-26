@@ -10,7 +10,7 @@ namespace eventsApi.Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private RepositoryContext _repoContext;
-        private PropertyMappingService _prpertyMappingService;
+        private IPropertyMappingService _propertyMappingService;
         private IEventRepository _event;
         private IAttendeeRepository _attendee;
         private IAttendeeEventRepository _attendeeevent;
@@ -21,7 +21,7 @@ namespace eventsApi.Repository
             {
                 if (_event == null)
                 {
-                    _event = new EventRepository(_repoContext, _prpertyMappingService);
+                    _event = new EventRepository(_repoContext, (PropertyMappingService)_propertyMappingService);
                 }
                 return _event;
             }
@@ -49,9 +49,10 @@ namespace eventsApi.Repository
             }
         }
 
-        public RepositoryWrapper(RepositoryContext repositoryContext)
+        public RepositoryWrapper(RepositoryContext repositoryContext, IPropertyMappingService propertyMappingService)
         {
             _repoContext = repositoryContext;
+            _propertyMappingService = propertyMappingService;
         }
 
         public async Task SaveAsync()
