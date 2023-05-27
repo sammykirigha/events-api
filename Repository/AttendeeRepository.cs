@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using eventsApi.Contracts;
+using eventsApi.Dtos;
 using eventsApi.Entities;
 using eventsApi.Helpers;
 using eventsApi.Models;
@@ -13,8 +10,11 @@ namespace eventsApi.Repository
 {
     public class AttendeeRepository : RepositoryBase<Attendee>, IAttendeeRepository
     {
-        public AttendeeRepository(RepositoryContext repositoryContext) : base(repositoryContext)
-        { }
+        private readonly AttendeePropertyMappingService _attendeePropertyMappingService;
+        public AttendeeRepository(RepositoryContext repositoryContext, AttendeePropertyMappingService attendeePropertyMappingService) : base(repositoryContext)
+        {
+             _attendeePropertyMappingService = attendeePropertyMappingService ?? throw new ArgumentNullException(nameof(attendeePropertyMappingService));
+         }
 
         public async Task<IEnumerable<Attendee>> GetAllAttendeesAsync()
         {
@@ -73,6 +73,13 @@ namespace eventsApi.Repository
                     || a.LastName.Contains(searchQuery)
                     || a.Email.Contains(searchQuery)
                     );
+            }
+
+            if (!string.IsNullOrWhiteSpace(attendeesResourceParameters.OrderBy))
+            {
+                var eventPropertyMappingDictionary = _attendeePropertyMappingService.GetPropertyMapping<AttendeeDto, Attendee>();
+
+                collection = collection.ApplySort(attendeesResourceParameters.OrderBy, eventPropertyMappingDictionary);
             }
 
 

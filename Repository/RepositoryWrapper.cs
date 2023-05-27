@@ -21,7 +21,7 @@ namespace eventsApi.Repository
             {
                 if (_event == null)
                 {
-                    _event = new EventRepository(_repoContext, (PropertyMappingService)_propertyMappingService);
+                    _event = new EventRepository(_repoContext, (EventPropertyMappingService)_propertyMappingService);
                 }
                 return _event;
             }
@@ -32,7 +32,7 @@ namespace eventsApi.Repository
             {
                 if (_attendee == null)
                 {
-                    _attendee = new AttendeeRepository(_repoContext);
+                    _attendee = new AttendeeRepository(_repoContext, (AttendeePropertyMappingService)_propertyMappingService);
                 }
                 return _attendee;
             }

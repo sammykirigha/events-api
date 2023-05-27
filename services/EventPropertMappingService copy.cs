@@ -5,7 +5,7 @@ using eventsApi.Models;
 namespace eventsApi.Repository
 {
 
-    public class PropertyMappingService : IPropertyMappingService
+    public class EventPropertyMappingService : IPropertyMappingService
     {
         private readonly Dictionary<string, PropertyMappingValue> _eventPropertyMapping =
         new(StringComparer.OrdinalIgnoreCase)
@@ -19,7 +19,7 @@ namespace eventsApi.Repository
 
         private readonly IList<IPropertyMapping> _propertyMappings = new List<IPropertyMapping>();
 
-        public PropertyMappingService()
+        public EventPropertyMappingService()
         {
             _propertyMappings.Add(new PropertyMapping<EventDto, Event>(_eventPropertyMapping));
         }

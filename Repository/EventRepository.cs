@@ -15,9 +15,9 @@ namespace eventsApi.Repository
     public class EventRepository : RepositoryBase<Event>, IEventRepository
     {
         private readonly IPropertyMappingService _propertyMappingService;
-        public EventRepository(RepositoryContext repositoryContext, PropertyMappingService propertyMappingService) : base(repositoryContext)
+        public EventRepository(RepositoryContext repositoryContext, EventPropertyMappingService eventpropertyMappingService) : base(repositoryContext)
         {
-            _propertyMappingService = propertyMappingService ?? throw new ArgumentNullException(nameof(propertyMappingService));
+            _propertyMappingService = eventpropertyMappingService ?? throw new ArgumentNullException(nameof(eventpropertyMappingService));
          }
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync()

@@ -48,7 +48,6 @@ namespace eventsApi.Controllers
 
                 Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
-
                 var attendeeResult = _mapper.Map<IEnumerable<AttendeeDto>>(attendees);
                 return Ok(attendeeResult);
             }

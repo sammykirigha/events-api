@@ -18,7 +18,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection(key:"JwtConfig"));
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-builder.Services.AddTransient<IPropertyMappingService, PropertyMappingService>();
+builder.Services.AddTransient<IPropertyMappingService, EventPropertyMappingService>();
+builder.Services.AddTransient<IPropertyMappingService, AttendeePropertyMappingService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

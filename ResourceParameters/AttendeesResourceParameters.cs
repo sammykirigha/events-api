@@ -4,6 +4,6 @@ namespace eventsApi.ResourceParameters
     {
         public string? AttendeeName { get; set; }
         public string? SearchQuery { get; set; }
-        public string OrderBy { get; set; } = "AttendeeName";
+        public string OrderBy { get; set; } = "Name";
     }
 }
