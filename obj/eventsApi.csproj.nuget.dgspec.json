@@ -48,6 +48,18 @@
               "target": "Package",
               "version": "[12.0.0, )"
             },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.2, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.2, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.2, )"
+            },
             "LINQtoCSV": {
               "target": "Package",
               "version": "[1.5.0, )"
@@ -71,6 +83,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.4, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.1.1, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "target": "Package",

@@ -1,16 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using eventsApi.Contracts;
 using eventsApi.Entities;
+using eventsApi.MappingServices;
 
 namespace eventsApi.Repository
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private RepositoryContext _repoContext;
-        private IPropertyMappingService _propertyMappingService;
+        AttendeePropertyMappingService attendeePropertyMappingService;
+        IEventPropertyMappingService _eventpropertyMappingService;
         private IEventRepository _event;
         private IAttendeeRepository _attendee;
         private IAttendeeEventRepository _attendeeevent;
@@ -21,7 +20,7 @@ namespace eventsApi.Repository
             {
                 if (_event == null)
                 {
-                    _event = new EventRepository(_repoContext, (EventPropertyMappingService)_propertyMappingService);
+                    _event = new EventRepository(_repoContext, _eventpropertyMappingService);
                 }
                 return _event;
             }
@@ -32,7 +31,7 @@ namespace eventsApi.Repository
             {
                 if (_attendee == null)
                 {
-                    _attendee = new AttendeeRepository(_repoContext, (AttendeePropertyMappingService)_propertyMappingService);
+                    _attendee = new AttendeeRepository(_repoContext);
                 }
                 return _attendee;
             }
@@ -49,10 +48,10 @@ namespace eventsApi.Repository
             }
         }
 
-        public RepositoryWrapper(RepositoryContext repositoryContext, IPropertyMappingService propertyMappingService)
+        public RepositoryWrapper(RepositoryContext repositoryContext, IEventPropertyMappingService eventpropertyMappingService)
         {
             _repoContext = repositoryContext;
-            _propertyMappingService = propertyMappingService;
+            _eventpropertyMappingService = eventpropertyMappingService;
         }
 
         public async Task SaveAsync()

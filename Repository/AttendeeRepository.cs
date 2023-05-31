@@ -2,6 +2,7 @@ using eventsApi.Contracts;
 using eventsApi.Dtos;
 using eventsApi.Entities;
 using eventsApi.Helpers;
+using eventsApi.MappingServices;
 using eventsApi.Models;
 using eventsApi.ResourceParameters;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,9 @@ namespace eventsApi.Repository
 {
     public class AttendeeRepository : RepositoryBase<Attendee>, IAttendeeRepository
     {
-        private readonly AttendeePropertyMappingService _attendeePropertyMappingService;
-        public AttendeeRepository(RepositoryContext repositoryContext, AttendeePropertyMappingService attendeePropertyMappingService) : base(repositoryContext)
+        private readonly IPropertyMappingService _propertyMappingService;
+        public AttendeeRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         {
-             _attendeePropertyMappingService = attendeePropertyMappingService ?? throw new ArgumentNullException(nameof(attendeePropertyMappingService));
          }
 
         public async Task<IEnumerable<Attendee>> GetAllAttendeesAsync()
@@ -75,12 +75,12 @@ namespace eventsApi.Repository
                     );
             }
 
-            if (!string.IsNullOrWhiteSpace(attendeesResourceParameters.OrderBy))
-            {
-                var eventPropertyMappingDictionary = _attendeePropertyMappingService.GetPropertyMapping<AttendeeDto, Attendee>();
+            // if (!string.IsNullOrWhiteSpace(attendeesResourceParameters.OrderBy))
+            // {
+            //     var attendeePropertyMappingDictionary = _propertyMappingService.GetPropertyMapping<AttendeeDto, Attendee>();
 
-                collection = collection.ApplySort(attendeesResourceParameters.OrderBy, eventPropertyMappingDictionary);
-            }
+            //     collection = collection.ApplySort(attendeesResourceParameters.OrderBy, attendeePropertyMappingDictionary);
+            // }
 
 
             return await PageList<Attendee>.CreateAsync(collection,

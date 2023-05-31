@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Text.Json;
-using System.Threading.Tasks;
 using AutoMapper;
 using eventsApi.Contracts;
 using eventsApi.Dtos;
@@ -11,6 +8,7 @@ using eventsApi.Helpers;
 using eventsApi.Models;
 using eventsApi.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
+using Name;
 
 namespace eventsApi.Controllers
 {
@@ -34,7 +32,8 @@ namespace eventsApi.Controllers
             {
                 var attendees = await _repository.Attendee.GetAllAttendeesAsync(attendeesResourceParameters);
 
-                   var previousPageLink = attendees.HasPrevious ? CreateResourceUri(attendeesResourceParameters, ResourceUriType.PreviousPage) : null;
+
+                var previousPageLink = attendees.HasPrevious ? CreateResourceUri(attendeesResourceParameters, ResourceUriType.PreviousPage) : null;
                 var nextPageLink = attendees.HasNext ? CreateResourceUri(attendeesResourceParameters, ResourceUriType.NextPage) : null;
                 var paginationMetadata = new
                 {

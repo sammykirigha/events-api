@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using eventsApi.Contracts;
 using eventsApi.Dtos.eventsDto;
 using eventsApi.Entities;
@@ -10,80 +7,79 @@ using eventsApi.Models;
 using eventsApi.ResourceParameters;
 using Microsoft.EntityFrameworkCore;
 
-namespace eventsApi.Repository
+
+namespace eventsApi.Repository;
+public class EventRepository : RepositoryBase<Event>, IEventRepository
 {
-    public class EventRepository : RepositoryBase<Event>, IEventRepository
+    private readonly IEventPropertyMappingService _eventpropertyMappingService;
+    public EventRepository(RepositoryContext repositoryContext, IEventPropertyMappingService eventpropertyMappingService) : base(repositoryContext)
     {
-        private readonly IPropertyMappingService _propertyMappingService;
-        public EventRepository(RepositoryContext repositoryContext, EventPropertyMappingService eventpropertyMappingService) : base(repositoryContext)
-        {
-            _propertyMappingService = eventpropertyMappingService ?? throw new ArgumentNullException(nameof(eventpropertyMappingService));
-         }
+        _eventpropertyMappingService = eventpropertyMappingService ?? throw new ArgumentNullException(nameof(eventpropertyMappingService));
+    }
 
-        public async Task<IEnumerable<Event>> GetAllEventsAsync()
+    public async Task<IEnumerable<Event>> GetAllEventsAsync()
+    {
+        var results = await FindAll().Include(_ => _.Attendees).OrderBy(ev => ev.Id).ToListAsync();
+        return results;
+    }
+
+    public async Task<Event> GetEventByIdAsync(Guid eventId)
+    {
+        var result = await FindByCondition(attendee => attendee.Id.Equals(eventId)).Include(_ => _.AttendeeEvents).FirstOrDefaultAsync();
+        return result!;
+    }
+
+    public void CreateEvent(Event eventToCreate)
+    {
+        eventToCreate.Id = Guid.NewGuid();
+        Create(eventToCreate);
+    }
+
+    public async Task<IEnumerable<Event>> GetAllEventsAsync(IEnumerable<Guid> eventIds)
+    {
+        if (eventIds == null)
         {
-            var results = await FindAll().Include(_ => _.AttendeeEvents).OrderBy(ev => ev.Id).ToListAsync();
-            return results;
+            throw new ArgumentNullException(nameof(eventIds));
         }
 
-        public async Task<Event> GetEventByIdAsync(Guid eventId)
+        //   .FirstOrDefaultAsync(e => eventIds.Contains(e.Id))
+        var results = await FindAll().Where(e => eventIds.Contains(e.Id)).ToListAsync();
+        return results;
+    }
+
+    public async Task<PageList<Event>> GetAllEventsAsync(EventsResourceParameters eventsResourceParameters)
+    {
+
+        if (eventsResourceParameters == null)
         {
-            var result = await FindByCondition(attendee => attendee.Id.Equals(eventId)).Include(_ => _.AttendeeEvents).FirstOrDefaultAsync();
-            return result!;
+            throw new ArgumentNullException(nameof(eventsResourceParameters));
         }
 
-        public void CreateEvent(Event eventToCreate)
+        var collection = FindAll() as IQueryable<Event>;
+
+        if (!string.IsNullOrWhiteSpace(eventsResourceParameters.EventName))
         {
-            eventToCreate.Id = Guid.NewGuid();
-            Create(eventToCreate);
+            var eventName = eventsResourceParameters.EventName.Trim();
+            collection = collection.Where(e => e.EventName == eventName);
         }
 
-        public async Task<IEnumerable<Event>> GetAllEventsAsync(IEnumerable<Guid> eventIds)
+        if (!string.IsNullOrWhiteSpace(eventsResourceParameters.SearchQuery))
         {
-            if (eventIds == null)
-            {
-                throw new ArgumentNullException(nameof(eventIds));
-            }
-
-            //   .FirstOrDefaultAsync(e => eventIds.Contains(e.Id))
-            var results = await FindAll().Where(e => eventIds.Contains(e.Id)).ToListAsync();
-            return results;
+            var searchQuery = eventsResourceParameters.SearchQuery.Trim();
+            collection = collection.Where(e => e.EventName!.Contains(searchQuery)
+            || e.Description!.Contains(searchQuery)
+            || e.Location!.Contains(searchQuery));
         }
 
-        public async Task<PageList<Event>> GetAllEventsAsync(EventsResourceParameters eventsResourceParameters)
+        if (!string.IsNullOrWhiteSpace(eventsResourceParameters.OrderBy))
         {
+            var eventPropertyMappingDictionary = _eventpropertyMappingService.GetPropertyMapping<EventDto, Event>();
 
-            if (eventsResourceParameters == null)
-            {
-                throw new ArgumentNullException(nameof(eventsResourceParameters));
-            }
-
-            var collection = FindAll() as IQueryable<Event>;
-
-            if (!string.IsNullOrWhiteSpace(eventsResourceParameters.EventName))
-            {
-                var eventName = eventsResourceParameters.EventName.Trim();
-                collection = collection.Where(e => e.EventName == eventName);
-            }
-
-            if (!string.IsNullOrWhiteSpace(eventsResourceParameters.SearchQuery))
-            {
-                var searchQuery = eventsResourceParameters.SearchQuery.Trim();
-                collection = collection.Where(e => e.EventName!.Contains(searchQuery)
-                || e.Description!.Contains(searchQuery)
-                || e.Location!.Contains(searchQuery));
-            }
-
-            if(!string.IsNullOrWhiteSpace(eventsResourceParameters.OrderBy))
-            {
-                var eventPropertyMappingDictionary = _propertyMappingService.GetPropertyMapping<EventDto, Event>();
-
-                collection = collection.ApplySort( eventsResourceParameters.OrderBy ,eventPropertyMappingDictionary);
-            }
-
-            return await PageList<Event>.CreateAsync(collection,
-            eventsResourceParameters.PageNumber,
-            eventsResourceParameters.PageSize);
+            collection = collection.ApplySort(eventsResourceParameters.OrderBy, eventPropertyMappingDictionary);
         }
+
+        return await PageList<Event>.CreateAsync(collection,
+        eventsResourceParameters.PageNumber,
+        eventsResourceParameters.PageSize);
     }
 }
