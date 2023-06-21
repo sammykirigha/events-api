@@ -1,7 +1,7 @@
 
 using eventsApi.Contracts;
+using eventsApi.DbContexts;
 using eventsApi.Dtos.eventsDto;
-using eventsApi.Entities;
 using eventsApi.Helpers;
 using eventsApi.Models;
 using eventsApi.ResourceParameters;

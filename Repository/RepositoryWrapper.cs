@@ -1,6 +1,6 @@
 
 using eventsApi.Contracts;
-using eventsApi.Entities;
+using eventsApi.DbContexts;
 using eventsApi.MappingServices;
 
 namespace eventsApi.Repository
@@ -8,8 +8,8 @@ namespace eventsApi.Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private RepositoryContext _repoContext;
-        AttendeePropertyMappingService attendeePropertyMappingService;
-        IEventPropertyMappingService _eventpropertyMappingService;
+        private AttendeePropertyMappingService attendeePropertyMappingService;
+        private IEventPropertyMappingService _eventpropertyMappingService;
         private IEventRepository _event;
         private IAttendeeRepository _attendee;
         private IAttendeeEventRepository _attendeeevent;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using eventsApi.Contracts;
-using eventsApi.Entities;
+using eventsApi.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace eventsApi.Repository

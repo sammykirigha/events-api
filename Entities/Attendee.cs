@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+
 
 namespace eventsApi.Models
 {
@@ -36,8 +33,12 @@ namespace eventsApi.Models
         [Required(ErrorMessage = "Speaker is required")]
         public string? Speaker { get; set; }
 
-        public List<Event> Events {get;} = new();
-        
+        public int IsEmailSent { get; set; } = 0;
+
+        public int EventReminderCheck { get; set; } = 0;
+
+        public List<Event> Events { get; } = new();
+
         public List<AttendeeEvent> AttendeeEvents { get; } = new();
 
     }

@@ -1,0 +1,12 @@
+X-Sender: Sammy@test.com
+X-Receiver: test@test.com
+MIME-Version: 1.0
+From: Sammy@test.com
+To: test@test.com
+Date: 31 May 2023 08:47:02 +0300
+Subject: Registered For An Event
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+
+VGhhbmsgeW91IGZvciByZWdpc3RlcmluZyBmb3Igb3VyIEV2ZW50IHNlZSB5b3UgdGhl
+cmUgc29vbg==

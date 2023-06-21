@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using eventsApi.Contracts;
 using eventsApi.Dtos.eventsDto;
 using eventsApi.Helpers;
 using eventsApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace eventsApi.Controllers
 {

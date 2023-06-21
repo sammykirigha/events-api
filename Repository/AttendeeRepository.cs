@@ -1,6 +1,6 @@
 using eventsApi.Contracts;
+using eventsApi.DbContexts;
 using eventsApi.Dtos;
-using eventsApi.Entities;
 using eventsApi.Helpers;
 using eventsApi.MappingServices;
 using eventsApi.Models;
@@ -60,13 +60,13 @@ namespace eventsApi.Repository
 
             var collection = FindAll().Include(a => a.Events) as IQueryable<Attendee>;
 
-            if (!String.IsNullOrWhiteSpace(attendeesResourceParameters.AttendeeName))
+            if (!String.IsNullOrWhiteSpace(attendeesResourceParameters.Name))
             {
-                var attendeeName = attendeesResourceParameters.AttendeeName.Trim().ToLower();
+                var attendeeName = attendeesResourceParameters?.Name.Trim().ToLower();
                 collection = collection.Where(a => a.FirstName == attendeeName || a.LastName == attendeeName);
             }
 
-            if (!String.IsNullOrWhiteSpace(attendeesResourceParameters.SearchQuery))
+            if (!String.IsNullOrWhiteSpace(attendeesResourceParameters?.SearchQuery))
             {
                 var searchQuery = attendeesResourceParameters.SearchQuery.Trim().ToLower();
                 collection = collection.Where(a => a.FirstName.Contains(searchQuery)

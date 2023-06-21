@@ -20,7 +20,11 @@ namespace eventsApi.Dtos
         public int Age { get; set; }
 
         public string Speaker { get; set; } = string.Empty;
-        
+
+        public int IsEmailSent { get; set; } = 0;
+
+        public int EventReminderCheck { get; set; } = 0;
+
         public List<EventDto>? events { get; set; }
     }
 }

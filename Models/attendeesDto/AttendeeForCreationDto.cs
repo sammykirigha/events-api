@@ -21,6 +21,10 @@ namespace eventsApi.Dtos
 
         public string Speaker { get; set; } = string.Empty;
 
+        public int IsEmailSent { get; set; } = 0;
+
+        public int EventReminderCheck { get; set; } = 0;
+
 
     }
 }

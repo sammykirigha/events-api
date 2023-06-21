@@ -8,7 +8,6 @@ using eventsApi.Helpers;
 using eventsApi.Models;
 using eventsApi.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
-using Name;
 
 namespace eventsApi.Controllers
 {
@@ -68,7 +67,7 @@ namespace eventsApi.Controllers
                     {
                         pageNumber = attendeesResourceParameters.PageNumber - 1,
                         pageSize = attendeesResourceParameters.PageSize,
-                        attendeeName = attendeesResourceParameters.AttendeeName,
+                        name = attendeesResourceParameters.Name,
                         searchQuery = attendeesResourceParameters.SearchQuery
                     });
                 case ResourceUriType.NextPage:
@@ -77,7 +76,7 @@ namespace eventsApi.Controllers
                    {
                        pageNumber = attendeesResourceParameters.PageNumber + 1,
                        pageSize = attendeesResourceParameters.PageSize,
-                       attendeeName = attendeesResourceParameters.AttendeeName,
+                       name = attendeesResourceParameters.Name,
                        searchQuery = attendeesResourceParameters.SearchQuery
                    });
                 default:
@@ -86,7 +85,7 @@ namespace eventsApi.Controllers
                  {
                      pageNumber = attendeesResourceParameters.PageNumber,
                      pageSize = attendeesResourceParameters.PageSize,
-                     attendeeName = attendeesResourceParameters.AttendeeName,
+                     name = attendeesResourceParameters.Name,
                      searchQuery = attendeesResourceParameters.SearchQuery
                  });
             }
@@ -181,7 +180,7 @@ namespace eventsApi.Controllers
             {
 
                 return StatusCode(500, "Internal server error");
-            }
+            } 
         }
 
         [HttpPost]

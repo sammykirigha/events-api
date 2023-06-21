@@ -10,6 +10,9 @@ D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\AutoMappe
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Azure.Core.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Azure.Identity.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\FluentEmail.Core.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\FluentEmail.Smtp.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Hangfire.AspNetCore.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Hangfire.Core.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Hangfire.NetCore.dll
@@ -47,6 +50,7 @@ D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.OpenApi.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\MimeKit.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Newtonsoft.Json.dll
 D:\PROJECTS\WORK-PROJECTS\DOTNET\events\api\eventsApi\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll

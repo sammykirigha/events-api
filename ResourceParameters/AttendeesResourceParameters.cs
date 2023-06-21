@@ -2,7 +2,7 @@ namespace eventsApi.ResourceParameters
 {
     public class AttendeesResourceParameters : ResourceParameters
     {
-        public string? AttendeeName { get; set; }
+        public string? Name { get; set; }
         public string OrderBy { get; set; } = "Name";
     }
 }
